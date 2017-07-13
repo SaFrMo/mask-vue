@@ -6,7 +6,7 @@
                 :x="x"
                 :y="y"
                 :index="getIndex(x, y)"
-                :cell="level.map ? level.map[y - 1][x - 1] : false"
+                :cell="level.map[y - 1][x - 1]"
                 :key="getIndex(x, y)"/>
         </div>
     </div>
@@ -20,7 +20,7 @@ export default {
   components: {
     'single-cell': Cell
   },
-  props: [ 'level', 'placements' ],
+  props: [ 'level' ],
   methods: {
     getIndex (x, y) {
       const xMinusOne = x - 1

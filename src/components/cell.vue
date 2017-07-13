@@ -18,7 +18,7 @@ export default {
   props: ['x', 'y', 'index', 'cell'],
   methods: {
     clicked () {
-      this.cell.health = Math.random() * this.cell.maxHealth
+
     }
   }
 }

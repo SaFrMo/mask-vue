@@ -1,7 +1,8 @@
 <template>
 
     <div class="game-board">
-        <game-grid :level="level" :placements="placements"/>
+        <control-zone :sliceTypes="sliceTypes" :slices="slices" @addButtonClicked="addButtonClicked"/>
+        <game-grid :level="level"/>
     </div>
 
 </template>
@@ -10,10 +11,13 @@
 
 import game from '../game'
 import GameGrid from './game-grid.vue'
+import ControlZone from './control-zone.vue'
+import _ from 'lodash'
 
 export default {
   components: {
-    'game-grid': GameGrid
+    'game-grid': GameGrid,
+    'control-zone': ControlZone
   },
   data () {
     return {
@@ -21,22 +25,38 @@ export default {
       placer: 0,
       sliceTypes: [
         new game.Slice(),
-        new game.Slice('Scout', 0.25)
+        new game.Slice({ name: 'Scout', radius: 0.25, cost: 75 })
       ],
-      placements: {
-        cells: [],
-        slices: []
-      }
+      slices: []
     }
   },
-  mounted () {
-    // Attach index data-attributes to cells
-    const cellElements = document.querySelectorAll('.cell')
-    for (let i = 0; i < cellElements.length; i++) {
-      this.placements.cells.push(new game.Cell())
-      this.placements.slices.push(false)
+  methods: {
+    addButtonClicked (sliceName) {
+      const model = this.sliceTypes.find(x => { return x.name === sliceName })
+      if (!model) return
+      const newSlice = _.cloneDeep(model)
+
+      if (newSlice.canPlaceAt(this.placer, this.slices)) {
+        this.slices.push({
+          slice: newSlice,
+          position: this.placer
+        })
+      } else {
+        this.error('Can\'t place slice there!')
+      }
+    },
+    error (msg) {
+      console.log(msg)
     }
   }
 }
 
 </script>
+
+<style scoped>
+
+    .game-board {
+        display: flex;
+    }
+
+</style>
