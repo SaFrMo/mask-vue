@@ -5,7 +5,9 @@
                 v-for="x in level.map.length"
                 :x="x"
                 :y="y"
-                :key="x"/>
+                :index="getIndex(x, y)"
+                :cell="level.map ? level.map[y - 1][x - 1] : false"
+                :key="getIndex(x, y)"/>
         </div>
     </div>
 </template>
@@ -18,7 +20,14 @@ export default {
   components: {
     'single-cell': Cell
   },
-  props: [ 'level' ]
+  props: [ 'level', 'placements' ],
+  methods: {
+    getIndex (x, y) {
+      const xMinusOne = x - 1
+      const yMinusOne = y - 1
+      return this.level.map.length * yMinusOne + xMinusOne
+    }
+  }
 }
 
 </script>

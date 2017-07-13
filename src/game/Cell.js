@@ -1,6 +1,6 @@
 export default class {
-  constructor () {
-    this.health = 100
-    this.maxHealth = 100
+  constructor (health) {
+    this.health = health || 100
+    this.maxHealth = health || 100
   }
 }
