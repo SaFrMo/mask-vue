@@ -4,7 +4,8 @@
         class="cell"
         @click="clicked">
 
-        <span class="underlay" :style="{ height: (cell.health / cell.maxHealth) * 100 + '%' }"></span>
+        <span class="underlay current" :style="{ height: currentHeight }"></span>
+        <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
 
         <span class="label"></span>
 
@@ -15,6 +16,20 @@
 <script>
 export default {
   props: ['x', 'y', 'index', 'cell'],
+  computed: {
+    currentHeight () {
+      return (this.cell.health / this.cell.maxHealth) * 100 + '%'
+    },
+    nextTurnHeight () {
+      // get occupant of this cell
+      const occupant = this.$store.state.placedSlices[this.index]
+      if (occupant) {
+        const nextHealth = this.cell.health - occupant.attack
+        return (nextHealth / this.cell.maxHealth) * 100 + '%'
+      }
+      return (this.cell.health / this.cell.maxHealth) * 100 + '%'
+    }
+  },
   methods: {
     clicked () {
       if (this.$store.state.placer === this.index) {
@@ -41,7 +56,12 @@ export default {
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(0, 255, 0, 0.4);
+        background-color: #55c;
+
+        transition: height 0.4s;
+    }
+    .underlay.next {
+      background-color: #5c5;
     }
     .label {
         position: relative;

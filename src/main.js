@@ -58,6 +58,18 @@ const store = new Vuex.Store({
         }
       }
       state.sliceQueue = {}
+      // apply health changes to all cells
+      let i = 0
+      for (let y = 0; y < state.level.map.length; y++) {
+        for (let x = 0; x < state.level.map.length; x++) {
+          // check for occupant
+          const occupant = state.placedSlices[i]
+          if (occupant) {
+            state.level.map[y][x].health -= occupant.attack
+          }
+          i++
+        }
+      }
     }
   }
 })
