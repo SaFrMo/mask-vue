@@ -9,16 +9,20 @@
                 :cell="level.map[y - 1][x - 1]"
                 :key="getIndex(x, y)"/>
         </div>
+
+        <grid-overlay/>
     </div>
 </template>
 
 <script>
 
 import Cell from './cell.vue'
+import GridOverlay from './grid-overlay'
 
 export default {
   components: {
-    'single-cell': Cell
+    'single-cell': Cell,
+    'grid-overlay': GridOverlay
   },
   props: [ 'level' ],
   methods: {
@@ -32,7 +36,9 @@ export default {
 
 </script>
 <style>
-
+    .game-grid {
+        position: relative;
+    }
     .grid-wrap {
       position: relative;
     }

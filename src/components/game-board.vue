@@ -12,7 +12,7 @@
 import game from '../game'
 import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
-// import _ from 'lodash'
+import _ from 'lodash'
 import bus from '../shared/bus'
 
 export default {
@@ -22,38 +22,48 @@ export default {
   },
   created () {
     bus.player = new game.Player()
+    bus.level = new game.Level()
+
+    bus.placer = 0
+
+    bus.sliceTypes = [
+      new game.Slice(),
+      new game.Slice({ name: 'Scout', radius: 0.25, cost: 75 })
+    ]
+    bus.selectedSlice = new game.Slice()
+    bus.slices = []
+    for (let i = 0; i < this.level.map.length ** 2; i++) {
+      bus.slices.push(false)
+    }
 
     bus.$on('cell-clicked', index => {
-      console.log(index)
+      // if( bus.player.canBuy(  ) )
     })
-  },
-  data () {
-    return {
-        // Level data
-      level: new game.Level(),
-
-      // Placement data
-      placer: 0,
-
-      // Slice data
-      selectedSlice: 'Standard',
-      sliceTypes: [
-        new game.Slice(),
-        new game.Slice({ name: 'Scout', radius: 0.25, cost: 75 })
-      ],
-      slices: []
-    }
   },
   computed: {
     bus () {
       return bus
+    },
+    level () {
+      return this.bus.level
+    },
+    sliceTypes () {
+      return this.bus.sliceTypes
+    },
+    selectedSlice () {
+      return this.bus.selectedSlice
+    },
+    slices () {
+      return this.bus.slices
+    },
+    placer () {
+      return this.bus.placer
     }
   },
   methods: {
     sliceSelected (sliceName) {
-      this.selectedSlice = sliceName
-
-      // this.sliceTypes.find(x => { return x.name === sliceName })
+      const model = this.sliceTypes.find(x => { return x.name === sliceName })
+      this.selectedSlice = _.cloneDeep(model)
 
     //   if (newSlice.canPlaceAt(this.placer, this.slices)) {
     //     this.slices.push({
