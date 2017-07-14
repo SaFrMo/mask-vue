@@ -8,6 +8,21 @@
             :cy="placerCoordinates.y"
             :r="cellSide * placerRadius"/>
 
+        <circle v-for="(slice, cellIndex) in $store.state.sliceQueue"
+          v-if="slice !== false"
+          :class="['slice', 'queued', slice.name.toLowerCase()]"
+          :cx="getCoordinatesFromCellIndex(cellIndex).x"
+          :cy="getCoordinatesFromCellIndex(cellIndex).y"
+          :r="cellSide * slice.radius"/>
+
+        <circle v-for="(slice, cellIndex) in $store.state.placedSlices"
+          v-if="slice !== false"
+          :class="['slice', slice.name.toLowerCase()]"
+          :cx="getCoordinatesFromCellIndex(cellIndex).x"
+          :cy="getCoordinatesFromCellIndex(cellIndex).y"
+          :r="cellSide * slice.radius"/>
+
+
     </svg>
 
 </template>
@@ -51,15 +66,23 @@ export default {
         left: 0;
         pointer-events: none;
     }
+    circle {
+      opacity: 1;
+      transition: 0.4s;
+    }
     .placer {
         fill: transparent;
         stroke: #000;
         stroke-dasharray: 3, 1;
-        transition: 0.4s;
         transform-origin: center;
 
         animation: placer-pulse 1s infinite;
     }
+    .queued {
+      opacity: 0.5;
+      transition: none;
+    }
+
     @keyframes placer-pulse {
         50% {
             transform: scale(0.9);

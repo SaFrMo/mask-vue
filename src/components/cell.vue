@@ -24,6 +24,8 @@ export default {
       } else {
         this.$store.commit('Select Cell', { index: this.index })
       }
+
+      this.$root.$forceUpdate()
     }
   }
 }

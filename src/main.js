@@ -18,14 +18,16 @@ const store = new Vuex.Store({
     placer: 0,
     sliceTypes: Game.Slice.Presets,
     selectedSliceIndex: 0,
-    placedSlices: [],
+    placedSlices: {},
     sliceQueue: {}
   },
   getters: {
     availableMoney: state => {
       let output = state.player.money
       for (let item of Object.values(state.sliceQueue)) {
-        output -= item.cost
+        if (item) {
+          output -= item.cost
+        }
       }
       return output
     }
@@ -38,7 +40,21 @@ const store = new Vuex.Store({
       state.placer = payload.index
     },
     'Toggle Purchase' (state, payload) {
-      Vue.set(state.sliceQueue, payload.index, _.cloneDeep(state.sliceTypes[payload.sliceIndex]))
+      if (state.sliceQueue[payload.index]) {
+        Vue.set(state.sliceQueue, payload.index, false)
+      } else if (!state.placedSlices[payload.index]) {
+        Vue.set(state.sliceQueue, payload.index, _.cloneDeep(state.sliceTypes[payload.sliceIndex]))
+      }
+    },
+    'Finish Turn' (state, payload) {
+      // buy queued slices and reset queue
+      for (let key of Object.keys(state.sliceQueue)) {
+        if (state.sliceQueue[key]) {
+          state.player.money -= state.sliceQueue[key].cost
+          Vue.set(state.placedSlices, key, state.sliceQueue[key])
+        }
+      }
+      state.sliceQueue = {}
     }
   }
 })
