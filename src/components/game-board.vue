@@ -1,82 +1,21 @@
 <template>
 
     <div class="game-board">
-        <control-zone :sliceTypes="sliceTypes" :slices="slices" @sliceSelected="sliceSelected"/>
-        <game-grid :level="level"/>
+        <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
+        <game-grid :level="$store.state.level"/>
     </div>
 
 </template>
 
 <script>
 
-import game from '../game'
 import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
-import _ from 'lodash'
-import bus from '../shared/bus'
 
 export default {
   components: {
     'game-grid': GameGrid,
     'control-zone': ControlZone
-  },
-  created () {
-    bus.player = new game.Player()
-    bus.level = new game.Level()
-
-    bus.placer = 0
-
-    bus.sliceTypes = [
-      new game.Slice(),
-      new game.Slice({ name: 'Scout', radius: 0.25, cost: 75 })
-    ]
-    bus.selectedSlice = new game.Slice()
-    bus.slices = []
-    for (let i = 0; i < this.level.map.length ** 2; i++) {
-      bus.slices.push(false)
-    }
-
-    bus.$on('cell-clicked', index => {
-      // if( bus.player.canBuy(  ) )
-    })
-  },
-  computed: {
-    bus () {
-      return bus
-    },
-    level () {
-      return this.bus.level
-    },
-    sliceTypes () {
-      return this.bus.sliceTypes
-    },
-    selectedSlice () {
-      return this.bus.selectedSlice
-    },
-    slices () {
-      return this.bus.slices
-    },
-    placer () {
-      return this.bus.placer
-    }
-  },
-  methods: {
-    sliceSelected (sliceName) {
-      const model = this.sliceTypes.find(x => { return x.name === sliceName })
-      this.selectedSlice = _.cloneDeep(model)
-
-    //   if (newSlice.canPlaceAt(this.placer, this.slices)) {
-    //     this.slices.push({
-    //       slice: newSlice,
-    //       position: this.placer
-    //     })
-    //   } else {
-    //     this.error('Can\'t place slice there!')
-    //   }
-    },
-    error (msg) {
-      console.log(msg)
-    }
   }
 }
 

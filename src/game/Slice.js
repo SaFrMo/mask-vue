@@ -1,4 +1,4 @@
-export default class {
+class Slice {
   constructor (opts) {
     this.opts = opts || {}
     this.name = this.opts.name || 'Standard'
@@ -13,4 +13,16 @@ export default class {
     }
     return true
   }
+}
+
+const Standard = new Slice()
+const Scout = new Slice({
+  name: 'Scout',
+  radius: 0.25,
+  cost: 75
+})
+
+export default {
+  Slice,
+  Presets: [ Standard, Scout ]
 }
