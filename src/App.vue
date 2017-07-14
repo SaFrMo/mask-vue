@@ -11,6 +11,11 @@ export default {
   name: 'app',
   components: {
     'game-board': GameBoard
+  },
+  methods: {
+    error (msg) {
+      console.log(msg)
+    }
   }
 }
 </script>

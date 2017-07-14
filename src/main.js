@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
+import _ from 'lodash'
 
 import Game from './game'
 
@@ -20,21 +21,24 @@ const store = new Vuex.Store({
     placedSlices: [],
     sliceQueue: {}
   },
+  getters: {
+    availableMoney: state => {
+      let output = state.player.money
+      for (let item of Object.values(state.sliceQueue)) {
+        output -= item.cost
+      }
+      return output
+    }
+  },
   mutations: {
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
     },
     'Select Cell' (state, payload) {
-      if (state.placer === payload.index) {
-         // Try to buy the selected slice, add to slice queue at the selected placer index
-        if (state.player.money >= state.sliceTypes[state.selectedSliceIndex].cost) {
-
-        } else {
-
-        }
-      } else {
-        state.placer = payload.index
-      }
+      state.placer = payload.index
+    },
+    'Toggle Purchase' (state, payload) {
+      Vue.set(state.sliceQueue, payload.index, _.cloneDeep(state.sliceTypes[payload.sliceIndex]))
     }
   }
 })

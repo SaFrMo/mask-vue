@@ -2,7 +2,7 @@
 
     <span
         class="cell"
-        @click="$store.commit('Select Cell', { index })">
+        @click="clicked">
 
         <span class="underlay" :style="{ height: (cell.health / cell.maxHealth) * 100 + '%' }"></span>
 
@@ -14,7 +14,18 @@
 
 <script>
 export default {
-  props: ['x', 'y', 'index', 'cell']
+  props: ['x', 'y', 'index', 'cell'],
+  methods: {
+    clicked () {
+      if (this.$store.state.placer === this.index) {
+        if (this.$store.getters.availableMoney >= this.$store.state.sliceTypes[this.$store.state.selectedSliceIndex].cost) {
+          this.$store.commit('Toggle Purchase', { index: this.index, sliceIndex: this.$store.state.selectedSliceIndex })
+        }
+      } else {
+        this.$store.commit('Select Cell', { index: this.index })
+      }
+    }
+  }
 }
 
 </script>
