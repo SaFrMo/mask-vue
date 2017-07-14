@@ -2,7 +2,7 @@
 
     <span
         class="cell"
-        @click="$store.commit('selectCell', { index })">
+        @click="$store.commit('Select Cell', { index })">
 
         <span class="underlay" :style="{ height: (cell.health / cell.maxHealth) * 100 + '%' }"></span>
 

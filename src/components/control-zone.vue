@@ -16,7 +16,7 @@
                 <span class="cost">${{ sliceType.cost }}</span>
 
                 <button
-                    @click="$store.commit('selectSlice', { index })">
+                    @click="$store.commit('Select Slice', { index })">
                     Select
                 </button>
             </li>

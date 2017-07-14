@@ -20,10 +20,10 @@ const store = new Vuex.Store({
     placedSlices: []
   },
   mutations: {
-    selectSlice (state, payload) {
+    'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
     },
-    selectCell (state, payload) {
+    'Select Cell' (state, payload) {
       state.placer = payload.index
     }
   }
