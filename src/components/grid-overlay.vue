@@ -7,14 +7,9 @@
 </template>
 
 <script>
-import bus from '../shared/bus'
 
 export default {
-  computed: {
-    bus () {
-      return bus
-    }
-  }
+
 }
 
 </script>

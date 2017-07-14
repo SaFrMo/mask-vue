@@ -5,6 +5,8 @@ class Slice {
     // in cell-width
     this.radius = this.opts.radius || 0.33
     this.cost = this.opts.cost || 50
+    this.health = this.opts.health || 100
+    this.maxHealth = this.opts.maxHealth || this.opts.health || 100
   }
 
   canPlaceAt (index, slices) {
@@ -21,8 +23,14 @@ const Scout = new Slice({
   radius: 0.25,
   cost: 75
 })
+const Tank = new Slice({
+  name: 'Tank',
+  radius: 0.5,
+  cost: 125,
+  health: 200
+})
 
 export default {
   Slice,
-  Presets: [ Standard, Scout ]
+  Presets: [ Standard, Scout, Tank ]
 }

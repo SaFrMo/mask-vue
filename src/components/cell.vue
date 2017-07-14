@@ -2,7 +2,7 @@
 
     <span
         class="cell"
-        @click="clicked">
+        @click="$store.commit('selectCell', { index })">
 
         <span class="underlay" :style="{ height: (cell.health / cell.maxHealth) * 100 + '%' }"></span>
 
@@ -13,15 +13,8 @@
 </template>
 
 <script>
-import bus from '../shared/bus'
-
 export default {
-  props: ['x', 'y', 'index', 'cell'],
-  methods: {
-    clicked () {
-      bus.$emit('cell-clicked', this.index)
-    }
-  }
+  props: ['x', 'y', 'index', 'cell']
 }
 
 </script>
