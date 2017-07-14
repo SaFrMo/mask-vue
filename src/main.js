@@ -22,11 +22,14 @@ const store = new Vuex.Store({
     sliceQueue: {}
   },
   getters: {
-    availableMoney: state => {
-      let output = state.player.money
+    availableMoney: (state, getters) => {
+      return state.player.money - getters.queuedExpenses
+    },
+    queuedExpenses: state => {
+      let output = 0
       for (let item of Object.values(state.sliceQueue)) {
         if (item) {
-          output -= item.cost
+          output += item.cost
         }
       }
       return output
