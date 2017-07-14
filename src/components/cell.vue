@@ -13,12 +13,13 @@
 </template>
 
 <script>
+import bus from '../shared/bus'
 
 export default {
   props: ['x', 'y', 'index', 'cell'],
   methods: {
     clicked () {
-
+      bus.$emit('cell-clicked', this.index)
     }
   }
 }

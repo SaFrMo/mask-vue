@@ -2,22 +2,34 @@
 
     <div class="control-zone">
 
-        <h3>Add
-            <select v-model="selected">
-                <option disabled value="">Select a slice type...</option>
-                <option v-for="(sliceType, index) in sliceTypes">{{ sliceType.name }}</option>
-            </select>
-            <button @click="$emit('addButtonClicked', selected)">Go!</button>
-        </h3>
+        <player-info/>
+
+        <ul class="add-wrap">
+            <li v-for="sliceType in sliceTypes">
+
+                <h3>{{ sliceType.name }}</h3>
+
+                <span class="cost">${{ sliceType.cost }}</span>
+
+                <button
+                    @click="$emit('sliceSelected', sliceType.name)">
+                    Select
+                </button>
+            </li>
+        </ul>
 
     </div>
 
 </template>
 
 <script>
+import PlayerInfo from './player-info.vue'
 
 export default {
   props: ['sliceTypes', 'slices'],
+  components: {
+    'player-info': PlayerInfo
+  },
   data () {
     return {
       selected: ''
@@ -26,3 +38,26 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+    .add-wrap {
+        width: 250px;
+        padding: 0;
+        margin-right: 30px;
+    }
+    .add-wrap li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .add-wrap li > * {
+        width: 33.33%;
+        text-align: left;
+        margin-right: 10px;
+    }
+    .add-wrap button {
+        margin: 0;
+    }
+
+</style>
