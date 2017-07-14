@@ -6,7 +6,7 @@
             class="placer"
             :cx="placerCoordinates.x"
             :cy="placerCoordinates.y"
-            :r="cellSide * .25"/>
+            :r="cellSide * placerRadius"/>
 
     </svg>
 
@@ -21,6 +21,9 @@ export default {
     },
     cellSide () {
       return 100 / this.$store.state.level.map.length
+    },
+    placerRadius () {
+      return this.$store.state.sliceTypes[this.$store.state.selectedSliceIndex].radius
     }
   },
   methods: {
@@ -47,9 +50,19 @@ export default {
         bottom: 0;
         left: 0;
         pointer-events: none;
-        background-color: rgba(255, 255, 255, 0.4);
     }
     .placer {
+        fill: transparent;
+        stroke: #000;
+        stroke-dasharray: 3, 1;
         transition: 0.4s;
+        transform-origin: center;
+
+        animation: placer-pulse 1s infinite;
+    }
+    @keyframes placer-pulse {
+        50% {
+            transform: scale(0.9);
+        }
     }
 </style>

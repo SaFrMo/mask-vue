@@ -25,7 +25,7 @@ const Scout = new Slice({
 })
 const Tank = new Slice({
   name: 'Tank',
-  radius: 0.5,
+  radius: 0.45,
   cost: 125,
   health: 200
 })

@@ -17,14 +17,24 @@ const store = new Vuex.Store({
     placer: 0,
     sliceTypes: Game.Slice.Presets,
     selectedSliceIndex: 0,
-    placedSlices: []
+    placedSlices: [],
+    sliceQueue: {}
   },
   mutations: {
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
     },
     'Select Cell' (state, payload) {
-      state.placer = payload.index
+      if (state.placer === payload.index) {
+         // Try to buy the selected slice, add to slice queue at the selected placer index
+        if (state.player.money >= state.sliceTypes[state.selectedSliceIndex].cost) {
+
+        } else {
+
+        }
+      } else {
+        state.placer = payload.index
+      }
     }
   }
 })
