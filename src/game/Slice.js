@@ -1,3 +1,5 @@
+import Movement from './Movement'
+
 class Slice {
   constructor (opts) {
     this.opts = opts || {}
@@ -8,6 +10,12 @@ class Slice {
     this.health = this.opts.health || 100
     this.maxHealth = this.opts.maxHealth || this.opts.health || 100
     this.attack = this.opts.attack || 20
+    this.movement = this.opts.movement || new Movement([
+      { direction: 'n' },
+      { direction: 's' },
+      { direction: 'e' },
+      { direction: 'w' }
+    ])
   }
 
   canPlaceAt (index, slices) {

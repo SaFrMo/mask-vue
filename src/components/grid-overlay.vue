@@ -33,6 +33,17 @@
         :cy="getCoordinatesFromCellIndex(cellIndex).y"
         :r="cellSide * slice.radius"/>
 
+      <g v-if="$store.state.placedSlices[parseInt($store.state.selectedPlacedSlice)]">
+
+        <path
+          v-for="movement in $store.state.placedSlices[parseInt($store.state.selectedPlacedSlice)].movement.getAllRelativeCoordinates()"
+          :d="calcD(movement)"
+          stroke-width="2px"
+          stroke="black"
+          />
+
+      </g>
+
 
     </svg>
 
@@ -53,6 +64,15 @@ export default {
     }
   },
   methods: {
+    getCoordinatesFromGridCoordinates (coordinates) {
+      const gridLength = this.$store.state.level.map.length
+      const index = coordinates[0].y * gridLength + coordinates[0].x
+      return this.getCoordinatesFromCellIndex(index)
+    },
+    getGridCoordinatesFromCellIndex (index) {
+      const gridLength = this.$store.state.level.map.length
+      return { x: gridLength % index, y: Math.floor(gridLength / index) }
+    },
     getCoordinatesFromCellIndex (index) {
       const gridLength = this.$store.state.level.map.length
       const cellHalfSide = this.cellSide / 2
@@ -61,6 +81,15 @@ export default {
       const y = cellHalfSide + (Math.floor(index / gridLength)) * this.cellSide
 
       return { x, y }
+    },
+    calcD (movement) {
+      const start = this.getCoordinatesFromCellIndex(parseInt(this.$store.state.selectedPlacedSlice))
+      const end = { x: this.cellSide * movement.x, y: this.cellSide * movement.y }
+      console.log(end)
+      // if (end.x < 0 || end.y < 0 || end.x > 100 || end.y > 100) {
+      //   return false
+      // }
+      return `M${start.x},${start.y} l${end.x},${end.y}`
     }
   }
 
