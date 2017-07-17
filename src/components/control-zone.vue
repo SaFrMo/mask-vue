@@ -50,7 +50,7 @@ export default {
     .add-wrap {
         width: 250px;
         padding: 0;
-        margin-right: 30px;
+        margin-left: 30px;
     }
     .add-wrap li {
         position: relative;

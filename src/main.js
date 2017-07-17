@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  strict: true,
   state: {
     player: new Game.Player(),
     level: new Game.Level(),
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     sliceTypes: Game.Slice.Presets,
     selectedSliceIndex: 0,
     placedSlices: {},
+    selectedPlacedSlice: false,
     sliceQueue: {}
   },
   getters: {
@@ -39,25 +41,22 @@ const store = new Vuex.Store({
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
     },
+    'Select Placed Slice' (state, payload) {
+      state.selectedPlacedSlice = payload.index.toString()
+    },
     'Select Cell' (state, payload) {
       state.placer = payload.index
     },
     'Toggle Purchase' (state, payload) {
       if (state.sliceQueue[payload.index]) {
+        // Remove slice from queue
         Vue.set(state.sliceQueue, payload.index, false)
       } else if (!state.placedSlices[payload.index]) {
+        // Add a deep clone of the selected slice to the queue
         Vue.set(state.sliceQueue, payload.index, _.cloneDeep(state.sliceTypes[payload.sliceIndex]))
       }
     },
     'Finish Turn' (state, payload) {
-      // buy queued slices and reset queue
-      for (let key of Object.keys(state.sliceQueue)) {
-        if (state.sliceQueue[key]) {
-          state.player.money -= state.sliceQueue[key].cost
-          Vue.set(state.placedSlices, key, state.sliceQueue[key])
-        }
-      }
-      state.sliceQueue = {}
       // apply health changes to all cells
       let i = 0
       for (let y = 0; y < state.level.map.length; y++) {
@@ -70,6 +69,15 @@ const store = new Vuex.Store({
           i++
         }
       }
+
+      // buy queued slices and reset queue
+      for (let key of Object.keys(state.sliceQueue)) {
+        if (state.sliceQueue[key]) {
+          state.player.money -= state.sliceQueue[key].cost
+          Vue.set(state.placedSlices, key, state.sliceQueue[key])
+        }
+      }
+      state.sliceQueue = {}
     }
   }
 })

@@ -1,8 +1,9 @@
 <template>
 
     <div class="game-board">
-        <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
+        <slice-roster />
         <game-grid :level="$store.state.level"/>
+        <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
     </div>
 
 </template>
@@ -11,11 +12,13 @@
 
 import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
+import SliceRoster from './slice-roster.vue'
 
 export default {
   components: {
     'game-grid': GameGrid,
-    'control-zone': ControlZone
+    'control-zone': ControlZone,
+    'slice-roster': SliceRoster
   }
 }
 

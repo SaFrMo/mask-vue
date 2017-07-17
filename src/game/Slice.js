@@ -7,7 +7,7 @@ class Slice {
     this.cost = this.opts.cost || 50
     this.health = this.opts.health || 100
     this.maxHealth = this.opts.maxHealth || this.opts.health || 100
-    this.attack = this.opts.attack || 10
+    this.attack = this.opts.attack || 20
   }
 
   canPlaceAt (index, slices) {

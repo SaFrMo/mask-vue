@@ -2,25 +2,36 @@
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
 
-        <circle
-            class="placer"
-            :cx="placerCoordinates.x"
-            :cy="placerCoordinates.y"
-            :r="cellSide * placerRadius"/>
+      <defs>
+        <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+          <path d="M-1,1 l2,-2
+                   M0,4 l4,-4
+                   M3,5 l2,-2"
+                style="stroke:black; stroke-width:1" />
+        </pattern>
 
-        <circle v-for="(slice, cellIndex) in $store.state.sliceQueue"
-          v-if="slice !== false"
-          :class="['slice', 'queued', slice.name.toLowerCase()]"
-          :cx="getCoordinatesFromCellIndex(cellIndex).x"
-          :cy="getCoordinatesFromCellIndex(cellIndex).y"
-          :r="cellSide * slice.radius"/>
+      </defs>
 
-        <circle v-for="(slice, cellIndex) in $store.state.placedSlices"
-          v-if="slice !== false"
-          :class="['slice', slice.name.toLowerCase()]"
-          :cx="getCoordinatesFromCellIndex(cellIndex).x"
-          :cy="getCoordinatesFromCellIndex(cellIndex).y"
-          :r="cellSide * slice.radius"/>
+      <circle
+          class="placer"
+          :cx="placerCoordinates.x"
+          :cy="placerCoordinates.y"
+          :r="cellSide * placerRadius"/>
+
+      <circle v-for="(slice, cellIndex) in $store.state.sliceQueue"
+        v-if="slice !== false"
+        :class="['slice', 'queued', slice.name.toLowerCase()]"
+        :cx="getCoordinatesFromCellIndex(cellIndex).x"
+        :cy="getCoordinatesFromCellIndex(cellIndex).y"
+        :r="cellSide * slice.radius"/>
+
+      <circle v-for="(slice, cellIndex) in $store.state.placedSlices"
+        v-if="slice !== false"
+        :index="cellIndex"
+        :class="['slice', 'placed', slice.name.toLowerCase(), { selected: $store.state.selectedPlacedSlice === cellIndex }]"
+        :cx="getCoordinatesFromCellIndex(cellIndex).x"
+        :cy="getCoordinatesFromCellIndex(cellIndex).y"
+        :r="cellSide * slice.radius"/>
 
 
     </svg>
@@ -81,6 +92,12 @@ export default {
     .queued {
       opacity: 0.5;
       transition: none;
+    }
+    .slice.placed.hovered {
+      fill: url(#diagonalHatch);
+    }
+    .slice.placed.selected {
+      stroke: #c00;
     }
 
     @keyframes placer-pulse {
