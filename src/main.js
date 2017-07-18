@@ -42,7 +42,7 @@ const store = new Vuex.Store({
       state.selectedSliceIndex = payload.index
     },
     'Select Placed Slice' (state, payload) {
-      state.selectedPlacedSlice = payload.index.toString()
+      state.selectedPlacedSlice = payload.index
     },
     'Select Cell' (state, payload) {
       state.placer = payload.index

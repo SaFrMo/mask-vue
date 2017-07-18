@@ -28,21 +28,10 @@
       <circle v-for="(slice, cellIndex) in $store.state.placedSlices"
         v-if="slice !== false"
         :index="cellIndex"
-        :class="['slice', 'placed', slice.name.toLowerCase(), { selected: $store.state.selectedPlacedSlice === cellIndex }]"
+        :class="['slice', 'placed', slice.name.toLowerCase(), { selected: $store.state.selectedPlacedSlice.toString() === cellIndex }]"
         :cx="getCoordinatesFromCellIndex(cellIndex).x"
         :cy="getCoordinatesFromCellIndex(cellIndex).y"
         :r="cellSide * slice.radius"/>
-
-      <g v-if="$store.state.placedSlices[parseInt($store.state.selectedPlacedSlice)]">
-
-        <path
-          v-for="movement in $store.state.placedSlices[parseInt($store.state.selectedPlacedSlice)].movement.getAllRelativeCoordinates()"
-          :d="calcD(movement)"
-          stroke-width="2px"
-          stroke="black"
-          />
-
-      </g>
 
 
     </svg>
@@ -85,7 +74,6 @@ export default {
     calcD (movement) {
       const start = this.getCoordinatesFromCellIndex(parseInt(this.$store.state.selectedPlacedSlice))
       const end = { x: this.cellSide * movement.x, y: this.cellSide * movement.y }
-      console.log(end)
       // if (end.x < 0 || end.y < 0 || end.x > 100 || end.y > 100) {
       //   return false
       // }

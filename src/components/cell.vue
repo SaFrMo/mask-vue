@@ -1,8 +1,11 @@
 <template>
 
     <span
-        class="cell"
-        @click="clicked">
+        :class="['cell', { 'can-place': canPlace }]"
+        @click="clicked"
+        :index="index"
+        :x="x"
+        :y="y">
 
         <span class="underlay current" :style="{ height: currentHeight }"></span>
         <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
@@ -28,6 +31,26 @@ export default {
         return (nextHealth / this.cell.maxHealth) * 100 + '%'
       }
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
+    },
+    canPlace () {
+      // do we have a slice selected?
+      if (this.$store.state.selectedPlacedSlice === false || this.$store.state.selectedPlacedSlice === this.index) return false
+
+      // where is that slice?
+      const slicePosition = this.getBoardCoordinatesFromIndex(this.$store.state.selectedPlacedSlice)
+
+      // cycle through slice rules
+      for (let rule of this.$store.state.placedSlices[this.$store.state.selectedPlacedSlice].movement.rules) {
+        const computedRule = { x: rule.x || 0, y: rule.y || 0 }
+        const extreme = { x: slicePosition.x + computedRule.x, y: slicePosition.y + computedRule.y }
+        // console.log(this.x, extreme.x, slicePosition.x)
+        if (this.between(this.x, slicePosition.x, extreme.x) && this.between(this.y, slicePosition.y, extreme.y)) {
+          // console.log(this.x, this.y, 'matches')
+          return true
+        }
+      }
+
+      return false
     }
   },
   methods: {
@@ -44,6 +67,19 @@ export default {
       }
 
       this.$root.$forceUpdate()
+    },
+    getBoardCoordinatesFromIndex (index) {
+      const x = index % this.$store.state.level.map.length + 1
+      const y = Math.floor(index / this.$store.state.level.map.length) + 1
+      return { x, y }
+    },
+    between (value, a, b, inclusive = true) {
+      const min = Math.min(a, b)
+      const max = Math.max(a, b)
+      if (inclusive) {
+        return value >= min && value <= max
+      }
+      return value > min && value < max
     }
   }
 }
@@ -53,6 +89,10 @@ export default {
 <style scoped>
     .cell {
         position: relative;
+        box-sizing: border-box;
+    }
+    .can-place {
+      border-top: 5px solid #c00;
     }
     .underlay {
         position: absolute;
