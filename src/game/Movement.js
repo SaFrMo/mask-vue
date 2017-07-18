@@ -3,10 +3,10 @@ export default class {
     this.opts = opts || {}
 
     this.rules = this.opts.rules || [
-      { x: 1 },
-      { x: -1 },
-      { y: 1 },
-      { y: -1 }
+      { x: 1, iterations: 3 },
+      { x: -1, iterations: 3 },
+      { y: 1, iterations: 3 },
+      { y: -1, iterations: 3 }
     ]
   }
 

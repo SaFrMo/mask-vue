@@ -51,10 +51,37 @@ export default {
       for (let rule of this.$store.state.placedSlices[this.$store.state.selectedPlacedSlice].movement.rules) {
         const computedRule = { x: rule.x || 0, y: rule.y || 0, iterations: rule.iterations || 1, options: rule.options || [] }
 
+        // determine if the rule will effect this cell
+        let effectsMe = false
         for (let i = 1; i < computedRule.iterations + 1 && i < this.$store.state.level.map.length; i++) {
-          const pos = { x: slicePosition.x + computedRule.x * i, y: slicePosition.y + computedRule.y * i }
-          if (this.x === pos.x && this.y === pos.y) {
-            return true
+          const intermediatePos = {
+            x: slicePosition.x + computedRule.x * i,
+            y: slicePosition.y + computedRule.y * i
+          }
+          if (this.x === intermediatePos.x && this.y === intermediatePos.y) {
+            effectsMe = true
+          }
+        }
+
+        if (effectsMe) {
+          for (let i = 1; i < computedRule.iterations + 1 && i < this.$store.state.level.map.length; i++) {
+            if (computedRule.options.indexOf('jump') === -1 && computedRule.iterations > 1) {
+              for (let intermediate = 1; intermediate < i; intermediate++) {
+                const intermediatePos = {
+                  x: slicePosition.x + computedRule.x * (intermediate),
+                  y: slicePosition.y + computedRule.y * (intermediate)
+                }
+                const index = this.getIndexFromBoardCoordinates(intermediatePos.x, intermediatePos.y)
+                if (this.$store.state.placedSlices[index] && this.$store.state.placedSlices[index] !== false) {
+                  return false
+                }
+              }
+            }
+
+            const pos = { x: slicePosition.x + computedRule.x * i, y: slicePosition.y + computedRule.y * i }
+            if (this.x === pos.x && this.y === pos.y) {
+              return true
+            }
           }
         }
       }
@@ -81,6 +108,9 @@ export default {
       const x = index % this.$store.state.level.map.length + 1
       const y = Math.floor(index / this.$store.state.level.map.length) + 1
       return { x, y }
+    },
+    getIndexFromBoardCoordinates (x, y) {
+      return this.$store.state.level.map.length * (y - 1) + (x - 1)
     },
     between (value, a, b, inclusive = true) {
       const min = Math.min(a, b)
