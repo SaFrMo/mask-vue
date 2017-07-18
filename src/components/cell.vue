@@ -38,23 +38,22 @@ export default {
     },
     canPlace () {
       // do we have a slice selected?
-      if (this.$store.state.selectedPlacedSlice === false || this.$store.state.selectedPlacedSlice === this.index) return false
+      if (
+        this.$store.state.selectedPlacedSlice === false ||
+        this.$store.state.selectedPlacedSlice === this.index ||
+        (this.$store.state.placedSlices[this.index] && this.$store.state.placedSlices[this.index] !== false)
+      ) return false
 
       // where is that slice?
       const slicePosition = this.getBoardCoordinatesFromIndex(this.$store.state.selectedPlacedSlice)
 
       // cycle through slice rules
       for (let rule of this.$store.state.placedSlices[this.$store.state.selectedPlacedSlice].movement.rules) {
-        const computedRule = { x: rule.x || 0, y: rule.y || 0 }
-        if (rule.iterations !== 'i') {
-          computedRule.iterations = rule.iterations || 1
-        } else {
-          computedRule.iterations = Math.max()
-        }
+        const computedRule = { x: rule.x || 0, y: rule.y || 0, iterations: rule.iterations || 1, options: rule.options || [] }
 
-        for (let i = 1; i < computedRule.iterations + 1; i++) {
-          const extreme = { x: slicePosition.x + computedRule.x * i, y: slicePosition.y + computedRule.y * i }
-          if (this.between(this.x, slicePosition.x, extreme.x) && this.between(this.y, slicePosition.y, extreme.y)) {
+        for (let i = 1; i < computedRule.iterations + 1 && i < this.$store.state.level.map.length; i++) {
+          const pos = { x: slicePosition.x + computedRule.x * i, y: slicePosition.y + computedRule.y * i }
+          if (this.x === pos.x && this.y === pos.y) {
             return true
           }
         }
