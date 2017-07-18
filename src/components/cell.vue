@@ -12,6 +12,10 @@
 
         <span class="label"></span>
 
+        <transition name="border-fade">
+          <span v-if="canPlace" class="place-border"></span>
+        </transition>
+
     </span>
 
 </template>
@@ -42,11 +46,17 @@ export default {
       // cycle through slice rules
       for (let rule of this.$store.state.placedSlices[this.$store.state.selectedPlacedSlice].movement.rules) {
         const computedRule = { x: rule.x || 0, y: rule.y || 0 }
-        const extreme = { x: slicePosition.x + computedRule.x, y: slicePosition.y + computedRule.y }
-        // console.log(this.x, extreme.x, slicePosition.x)
-        if (this.between(this.x, slicePosition.x, extreme.x) && this.between(this.y, slicePosition.y, extreme.y)) {
-          // console.log(this.x, this.y, 'matches')
-          return true
+        if (rule.iterations !== 'i') {
+          computedRule.iterations = rule.iterations || 1
+        } else {
+          computedRule.iterations = Math.max()
+        }
+
+        for (let i = 1; i < computedRule.iterations + 1; i++) {
+          const extreme = { x: slicePosition.x + computedRule.x * i, y: slicePosition.y + computedRule.y * i }
+          if (this.between(this.x, slicePosition.x, extreme.x) && this.between(this.y, slicePosition.y, extreme.y)) {
+            return true
+          }
         }
       }
 
@@ -89,10 +99,16 @@ export default {
 <style scoped>
     .cell {
         position: relative;
-        box-sizing: border-box;
     }
-    .can-place {
-      border-top: 5px solid #c00;
+    .place-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 5px solid #c00;
+      border-radius: 8px;
+      box-sizing: border-box;
     }
     .underlay {
         position: absolute;
@@ -108,5 +124,15 @@ export default {
     }
     .label {
         position: relative;
+    }
+
+    .border-fade-enter-active,
+    .border-fade-leave-active {
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .border-fade-enter,
+    .border-fade-leave-to {
+      opacity: 0;
+      transform: scale(.8);
     }
 </style>
