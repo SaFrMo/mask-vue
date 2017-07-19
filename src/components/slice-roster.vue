@@ -78,5 +78,6 @@ export default {
     left: 0;
     height: 100%;
     background-color: #0c0;
+    transition: width 0.4s;
   }
 </style>

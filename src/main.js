@@ -23,7 +23,8 @@ const store = new Vuex.Store({
     selectedPlacedSlice: false,
     sliceQueue: {},
     movedThisTurn: [],
-    turn: 1
+    turn: 1,
+    score: 0
   },
   getters: {
     availableMoney: (state, getters) => {
@@ -64,8 +65,14 @@ const store = new Vuex.Store({
       state.selectedPlacedSlice = payload.index
       state.movedThisTurn.push(payload.index)
     },
+    'Move Slice to Goal' (state, payload) {
+      state.score++
+      Vue.delete(state.placedSlices, state.selectedPlacedSlice)
+      state.selectedPlacedSlice = false
+    },
     'Select Cell' (state, payload) {
       state.placer = payload.index
+      state.selectedPlacedSlice = false
     },
     'Toggle Purchase' (state, payload) {
       if (state.sliceQueue[payload.index]) {
@@ -77,7 +84,7 @@ const store = new Vuex.Store({
       }
     },
     'Finish Turn' (state, payload) {
-      // apply health changes to all cells
+      // apply health changes to all cells and slices
       let i = 0
       for (let y = 0; y < state.level.map.length; y++) {
         for (let x = 0; x < state.level.map.length; x++) {
@@ -85,6 +92,12 @@ const store = new Vuex.Store({
           const occupant = state.placedSlices[i]
           if (occupant) {
             state.level.map[y][x].health -= occupant.attack
+            occupant.health -= state.level.map[y][x].attack
+
+            if (occupant.health <= 0) {
+              state.selectedPlacedSlice = false
+              Vue.delete(state.placedSlices, i)
+            }
           }
           i++
         }

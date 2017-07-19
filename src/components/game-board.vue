@@ -8,6 +8,7 @@
     </div>
 
     <h3>turn {{ $store.state.turn }}</h3>
+    <h3>score: {{ $store.state.score }}</h3>
   </div>
 
 </template>

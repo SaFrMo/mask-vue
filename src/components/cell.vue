@@ -112,6 +112,11 @@ export default {
         return false
       }
 
+      // our health is 0, so return true
+      if (this.cell.health <= 0) {
+        return true
+      }
+
       const rules = this.$store.getters.selectedSliceModel.placeLocations
       // we match a stock placing location, so return true
       if (this.x === rules.x || this.y === rules.y) {
