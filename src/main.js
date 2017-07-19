@@ -21,7 +21,9 @@ const store = new Vuex.Store({
     selectedSliceIndex: 0,
     placedSlices: {},
     selectedPlacedSlice: false,
-    sliceQueue: {}
+    sliceQueue: {},
+    movedThisTurn: [],
+    turn: 1
   },
   getters: {
     availableMoney: (state, getters) => {
@@ -60,6 +62,7 @@ const store = new Vuex.Store({
       Vue.set(state.placedSlices, payload.index, state.placedSlices[oldIndex])
       Vue.delete(state.placedSlices, oldIndex)
       state.selectedPlacedSlice = payload.index
+      state.movedThisTurn.push(payload.index)
     },
     'Select Cell' (state, payload) {
       state.placer = payload.index
@@ -95,6 +98,12 @@ const store = new Vuex.Store({
         }
       }
       state.sliceQueue = {}
+
+      // clear movement list
+      state.movedThisTurn = []
+
+      // increment turn counter
+      state.turn++
     }
   }
 })

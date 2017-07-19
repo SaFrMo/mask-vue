@@ -55,6 +55,11 @@ export default {
         (this.$store.state.placedSlices[this.index] && this.$store.state.placedSlices[this.index] !== false)
       ) return false
 
+      // can our slice move?
+      if (this.$store.state.movedThisTurn.indexOf(this.$store.state.selectedPlacedSlice) !== -1) {
+        return false
+      }
+
       // where is that slice?
       const slicePosition = this.getBoardCoordinatesFromIndex(this.$store.state.selectedPlacedSlice)
 

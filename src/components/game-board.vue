@@ -1,10 +1,14 @@
 <template>
 
+  <div class="board-wrap">
     <div class="game-board">
-        <slice-roster />
-        <game-grid :level="$store.state.level"/>
-        <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
+      <slice-roster />
+      <game-grid :level="$store.state.level"/>
+      <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
     </div>
+
+    <h3>turn {{ $store.state.turn }}</h3>
+  </div>
 
 </template>
 
