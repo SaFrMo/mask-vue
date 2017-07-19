@@ -7,8 +7,15 @@
       <control-zone :sliceTypes="$store.state.sliceTypes" :slices="$store.state.placedSlices" />
     </div>
 
-    <h3>turn {{ $store.state.turn }}</h3>
-    <h3>score: {{ $store.state.score }}</h3>
+    <div class="meta">
+      <div class="left">
+        <h3>turn {{ $store.state.turn }}</h3>
+        <h3>score: {{ $store.state.score }} / {{ $store.state.level.goal }}</h3>
+      </div>
+
+      <button @click="$store.commit('Finish Turn')">Finish Turn</button>
+    </div>
+
   </div>
 
 </template>
@@ -20,6 +27,13 @@ import ControlZone from './control-zone.vue'
 import SliceRoster from './slice-roster.vue'
 
 export default {
+  mounted () {
+    window.onkeyup = evt => {
+      if (evt.keyCode === 32) {
+        this.$store.commit('Finish Turn')
+      }
+    }
+  },
   components: {
     'game-grid': GameGrid,
     'control-zone': ControlZone,
@@ -34,6 +48,20 @@ export default {
     .game-board {
         display: flex;
         align-items: center;
+    }
+    .meta {
+      display: flex;
+      padding: 20px;
+      color: #000;
+      background-color: #fff;
+      border-radius: 8px;
+      margin: 40px 280px 0 370px;
+      justify-content: space-between;
+      border: 2px solid #fff;
+      text-align: left;
+    }
+    .meta button {
+      margin: 0;
     }
 
 </style>

@@ -18,6 +18,7 @@ class Slice {
     this.maxHealth = this.opts.maxHealth || this.opts.health || 100
     this.attack = this.opts.attack || 20
     this.movement = this.opts.movement || new Movement()
+    this.canScore = this.opts.hasOwnProperty('canScore') ? this.opts.canScore : true
   }
 
   canPlaceAt (index, slices) {
@@ -32,7 +33,22 @@ const Standard = new Slice()
 const Scout = new Slice({
   name: 'Scout',
   radius: 0.25,
-  cost: 75
+  cost: 75,
+  attack: 5,
+  health: 30,
+  canScore: false,
+  movement: new Movement({
+    rules: [
+      { x: 1, iterations: 3 },
+      { x: -1, iterations: 3 },
+      { y: 1, iterations: 3 },
+      { y: -1, iterations: 3 },
+      { x: 1, y: 1, iterations: 3 },
+      { x: 1, y: -1, iterations: 3 },
+      { x: -1, y: 1, iterations: 3 },
+      { x: -1, y: -1, iterations: 3 }
+    ]
+  })
 })
 const Tank = new Slice({
   name: 'Tank',

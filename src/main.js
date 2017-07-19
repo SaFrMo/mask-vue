@@ -43,7 +43,7 @@ const store = new Vuex.Store({
       return state.sliceTypes[state.selectedSliceIndex]
     },
     selectedPlacedSlice (state) {
-      return state.placedSlices[state.selectedPlacedSlice]
+      return state.placedSlices[state.selectedPlacedSlice] || false
     }
   },
   mutations: {

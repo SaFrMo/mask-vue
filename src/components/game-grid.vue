@@ -33,6 +33,9 @@ export default {
   props: [ 'level' ],
   computed: {
     goalOpen () {
+      // false if the selected slice can't score
+      const selected = this.$store.getters.selectedPlacedSlice
+      if (!selected || !selected.canScore) return false
       const sliceAtEnd = this.getCoordinates(this.$store.state.selectedPlacedSlice).x >= this.$store.state.level.map.length
       let sliceCanMove = false
       if (this.$store.state.movedThisTurn.indexOf(this.$store.state.selectedPlacedSlice) === -1) {
@@ -53,8 +56,10 @@ export default {
       return { x, y }
     },
     goalZoneClicked () {
-      // remove selected slice and score points
-      this.$store.commit('Move Slice to Goal')
+      if (this.goalOpen) {
+        // remove selected slice and score points
+        this.$store.commit('Move Slice to Goal')
+      }
     }
   }
 }

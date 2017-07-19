@@ -22,8 +22,6 @@
             </li>
         </ul>
 
-        <button @click="$store.commit('Finish Turn')">Finish Turn</button>
-
     </div>
 
 </template>
