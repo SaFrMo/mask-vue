@@ -35,6 +35,12 @@ const store = new Vuex.Store({
         }
       }
       return output
+    },
+    selectedSliceModel (state) {
+      return state.sliceTypes[state.selectedSliceIndex]
+    },
+    selectedPlacedSlice (state) {
+      return state.placedSlices[state.selectedPlacedSlice]
     }
   },
   mutations: {
@@ -42,6 +48,17 @@ const store = new Vuex.Store({
       state.selectedSliceIndex = payload.index
     },
     'Select Placed Slice' (state, payload) {
+      // select new slice or deselect current
+      if (state.selectedPlacedSlice === payload.index) {
+        state.selectedPlacedSlice = false
+      } else {
+        state.selectedPlacedSlice = payload.index
+      }
+    },
+    'Move Placed Slice' (state, payload) {
+      const oldIndex = state.selectedPlacedSlice
+      Vue.set(state.placedSlices, payload.index, state.placedSlices[oldIndex])
+      Vue.delete(state.placedSlices, oldIndex)
       state.selectedPlacedSlice = payload.index
     },
     'Select Cell' (state, payload) {

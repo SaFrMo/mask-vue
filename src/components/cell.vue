@@ -1,8 +1,10 @@
 <template>
 
     <span
-        :class="['cell', { 'can-place': canPlace }]"
+        :class="['cell', { 'can-move': canMove }, { 'can-place': canPlace }]"
         @click="clicked"
+        @mouseenter="mouseEnter"
+        @mouseleave="mouseLeave"
         :index="index"
         :x="x"
         :y="y">
@@ -13,7 +15,11 @@
         <span class="label"></span>
 
         <transition name="border-fade">
-          <span v-if="canPlace" class="place-border"></span>
+          <span v-if="canMove" class="move-border"></span>
+        </transition>
+
+        <transition name="border-fade">
+          <span v-if="canPlace" class="place-alert">↓</span>
         </transition>
 
     </span>
@@ -23,6 +29,11 @@
 <script>
 export default {
   props: ['x', 'y', 'index', 'cell'],
+  data () {
+    return {
+      canPlace: false
+    }
+  },
   computed: {
     currentHeight () {
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
@@ -36,7 +47,7 @@ export default {
       }
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
     },
-    canPlace () {
+    canMove () {
       // do we have a slice selected?
       if (
         this.$store.state.selectedPlacedSlice === false ||
@@ -90,12 +101,36 @@ export default {
     }
   },
   methods: {
+    checkPlace () {
+      // can we place our selected slice on this cell?
+      if (this.$store.state.selectedSliceIndex === false) {
+        return false
+      }
+
+      const rules = this.$store.getters.selectedSliceModel.placeLocations
+      // we match a stock placing location, so return true
+      if (this.x === rules.x || this.y === rules.y) {
+        return true
+      }
+
+      // check other slices to see if we fall in their zones
+
+      return false
+    },
+    mouseEnter () {
+      this.canPlace = this.checkPlace()
+    },
+    mouseLeave () {
+      this.canPlace = false
+    },
     clicked () {
-      // is cell occupied? if so, select occupying slice
       if (this.$store.state.placedSlices[this.index]) {
+        // is cell occupied? if so, select occupying slice
         this.$store.commit('Select Placed Slice', { index: this.index })
+      } else if (this.canMove) {
+        this.$store.commit('Move Placed Slice', { index: this.index })
       } else if (this.$store.state.placer === this.index) {
-        if (this.$store.getters.availableMoney >= this.$store.state.sliceTypes[this.$store.state.selectedSliceIndex].cost) {
+        if (this.canPlace && this.$store.getters.availableMoney >= this.$store.getters.selectedSliceModel.cost) {
           this.$store.commit('Toggle Purchase', { index: this.index, sliceIndex: this.$store.state.selectedSliceIndex })
         }
       } else {
@@ -129,7 +164,7 @@ export default {
     .cell {
         position: relative;
     }
-    .place-border {
+    .move-border {
       position: absolute;
       top: 0;
       left: 0;
@@ -154,6 +189,12 @@ export default {
     .label {
         position: relative;
     }
+    .place-alert {
+      position: relative;
+      color: #000;
+      font-size: 50px;
+    }
+
 
     .border-fade-enter-active,
     .border-fade-leave-active {

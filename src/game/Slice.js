@@ -4,6 +4,13 @@ class Slice {
   constructor (opts) {
     this.opts = opts || {}
     this.name = this.opts.name || 'Standard'
+    this.placeLocations = this.opts.placeLocations || { x: 1 }
+    // this.safeZones = this.opts.safeZones || [
+    //   { x: 1 },
+    //   { x: -1 },
+    //   { y: 1 },
+    //   { y: -1 }
+    // ]
     // in cell-width
     this.radius = this.opts.radius || 0.33
     this.cost = this.opts.cost || 50
