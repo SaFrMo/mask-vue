@@ -16,6 +16,8 @@
       <button @click="$store.commit('Finish Turn')">Finish Turn</button>
     </div>
 
+    <tooltip/>
+
   </div>
 
 </template>
@@ -25,6 +27,7 @@
 import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
 import SliceRoster from './slice-roster.vue'
+import Tooltip from './tooltip.vue'
 
 export default {
   mounted () {
@@ -37,7 +40,8 @@ export default {
   components: {
     'game-grid': GameGrid,
     'control-zone': ControlZone,
-    'slice-roster': SliceRoster
+    'slice-roster': SliceRoster,
+    'tooltip': Tooltip
   }
 }
 
