@@ -8,7 +8,7 @@
             <li v-for="(sliceType, index) in sliceTypes">
 
                 <transition name="expand">
-                    <div v-if="$store.state.selectedSliceIndex === index" class="underlay"></div>
+                    <div data-tooltip="test" v-if="$store.state.selectedSliceIndex === index" class="underlay"></div>
                 </transition>
 
                 <h3>{{ sliceType.name }}</h3>

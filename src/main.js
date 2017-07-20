@@ -6,6 +6,7 @@ import App from './App'
 import _ from 'lodash'
 
 import Game from './game'
+import tooltips from './tooltips'
 
 Vue.config.productionTip = false
 
@@ -126,5 +127,11 @@ new Vue({
   store,
   el: '#app',
   template: '<App/>',
-  components: { App }
+  components: { App },
+  mounted () {
+    tooltips.initialize()
+  },
+  updated () {
+    tooltips.update()
+  }
 })

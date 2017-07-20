@@ -1,6 +1,6 @@
 <template>
 
-  <div class="slice-roster">
+  <div class="slice-roster" data-tooltip="tooltip!">
 
     <h2>Slices</h2>
 
