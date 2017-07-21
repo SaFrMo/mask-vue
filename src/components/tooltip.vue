@@ -7,7 +7,7 @@
       <h3>{{ headline }}</h3>
       <button @click="nextStep">Next</button>
     </div>
-    
+
     <div class="message">{{ message }}</div>
 
   </div>
@@ -77,9 +77,10 @@ export default {
     border-radius: 10px;
     color: #000;
     width: 300px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 25px);
     transition: left 0.4s, top 0.4s;
     border: 5px solid;
+    z-index: 10;
   }
   .headline-wrap {
     display: flex;

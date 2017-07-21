@@ -2,6 +2,8 @@
 
   <div class="board-wrap">
 
+    <tooltip/>
+
     <player-info/>
 
     <div class="game-board">
@@ -13,13 +15,11 @@
     <div class="meta">
       <div class="left">
         <h3>turn {{ $store.state.turn }}</h3>
-        <h3>score: {{ $store.state.score }} / {{ $store.state.level.goal }}</h3>
+        <h3 class="score">score: {{ $store.state.score }} / {{ $store.state.level.goal }}</h3>
       </div>
 
-      <button @click="$store.commit('Finish Turn')">Finish Turn</button>
+      <button class="finish-turn" @click="$store.commit('Finish Turn')">Finish Turn</button>
     </div>
-
-    <tooltip/>
 
   </div>
 
