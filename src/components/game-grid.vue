@@ -1,5 +1,6 @@
 <template>
   <div class="grid-wrap">
+
     <div class="game-grid">
         <div class="row" v-for="y in level.map.length">
             <single-cell

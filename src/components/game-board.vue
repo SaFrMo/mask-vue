@@ -1,6 +1,9 @@
 <template>
 
   <div class="board-wrap">
+
+    <player-info/>
+
     <div class="game-board">
       <slice-roster />
       <game-grid :level="$store.state.level"/>
@@ -28,6 +31,7 @@ import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
 import SliceRoster from './slice-roster.vue'
 import Tooltip from './tooltip.vue'
+import PlayerInfo from './player-info'
 
 export default {
   mounted () {
@@ -41,7 +45,8 @@ export default {
     'game-grid': GameGrid,
     'control-zone': ControlZone,
     'slice-roster': SliceRoster,
-    'tooltip': Tooltip
+    'tooltip': Tooltip,
+    'player-info': PlayerInfo
   }
 }
 

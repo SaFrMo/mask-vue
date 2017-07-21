@@ -2,8 +2,6 @@
 
     <div class="control-zone">
 
-        <player-info/>
-
         <ul class="add-wrap">
             <li v-for="(sliceType, index) in sliceTypes">
 
@@ -27,13 +25,8 @@
 </template>
 
 <script>
-import PlayerInfo from './player-info.vue'
-
 export default {
   props: ['sliceTypes', 'slices'],
-  components: {
-    'player-info': PlayerInfo
-  },
   data () {
     return {
       selected: ''

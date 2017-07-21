@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
 import _ from 'lodash'
+import tutorial from './game/Tutorial'
 
 import Game from './game'
 
@@ -24,7 +25,9 @@ const store = new Vuex.Store({
     sliceQueue: {},
     movedThisTurn: [],
     turn: 1,
-    score: 0
+    score: 0,
+    tutorial,
+    currentTutorialStep: 0
   },
   getters: {
     availableMoney: (state, getters) => {
@@ -47,6 +50,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    'Change Tutorial Step' (state, payload) {
+      state.currentTutorialStep = Math.max(state.currentTutorialStep + payload.delta, 0)
+    },
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
     },
