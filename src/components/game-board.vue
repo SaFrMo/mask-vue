@@ -21,6 +21,8 @@
       <button class="finish-turn" @click="$store.commit('Finish Turn')">Finish Turn</button>
     </div>
 
+    <message-modal/>
+
   </div>
 
 </template>
@@ -32,6 +34,7 @@ import ControlZone from './control-zone.vue'
 import SliceRoster from './slice-roster.vue'
 import Tooltip from './tooltip.vue'
 import PlayerInfo from './player-info'
+import MessageModal from './message-modal'
 
 export default {
   mounted () {
@@ -46,7 +49,8 @@ export default {
     'control-zone': ControlZone,
     'slice-roster': SliceRoster,
     'tooltip': Tooltip,
-    'player-info': PlayerInfo
+    'player-info': PlayerInfo,
+    'message-modal': MessageModal
   }
 }
 

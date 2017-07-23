@@ -18,6 +18,11 @@
     <div :class="['goal-zone', { available: goalOpen }]" @click="goalZoneClicked">
       Goal
     </div>
+
+    <div v-if="$store.state.score >= $store.state.level.goal">
+      <h3>Level complete!</h3>
+      <button @click="$store.commit('Finish Level')">Click to continue...</button>
+    </div>
   </div>
 </template>
 

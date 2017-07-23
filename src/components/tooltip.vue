@@ -10,6 +10,8 @@
 
     <div class="message">{{ message }}</div>
 
+    <button @click="$store.commit('Change Tutorial Step', { delta: Infinity })">Exit</button>
+
   </div>
 
 </template>

@@ -17,6 +17,18 @@ const store = new Vuex.Store({
   state: {
     player: new Game.Player(),
     level: new Game.Level(),
+    levels: [
+      new Game.Level(),
+      new Game.Level(5, [
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ]
+      ])
+    ],
+    currentLevel: 0,
     placer: 0,
     sliceTypes: Game.Slice.Presets,
     selectedSliceIndex: 0,
@@ -123,6 +135,11 @@ const store = new Vuex.Store({
 
       // increment turn counter
       state.turn++
+    },
+    'Finish Level' (state, payload) {
+      state.currentLevel++
+      state.level = _.cloneDeep(state.levels[state.currentLevel])
+      state.score = 0
     }
   }
 })
