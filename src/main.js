@@ -157,6 +157,8 @@ const store = new Vuex.Store({
       state.currentLevel++
       state.level = _.cloneDeep(state.levels[state.currentLevel])
       state.score = 0
+      state.turn = 1
+      state.player.money = 500
     }
   }
 })

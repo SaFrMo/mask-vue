@@ -22,7 +22,7 @@
           <span v-if="canPlace" class="place-alert">↓</span>
         </transition>
 
-        <div class="cell-info" v-if="$store.state.selectedPlacedSlice !== false">
+        <div class="cell-info">
           <div v-if="cell.revealed">
             attack: {{ cell.attack }}<br/>
             value: ${{ cell.value }}
@@ -229,17 +229,13 @@ export default {
 
     .cell-info {
       position: absolute;
-      background-color: #9a9;
-      padding: 10px;
-      border-radius: 8px;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: opacity 0.4s, transform 0.4s;
+      bottom: 0;
+      left: 0;
+      background-color: #fff;
+      font-size: 10px;
+      color: #000;
+      padding: 2px;
       pointer-events: none;
       z-index: 50;
-    }
-    .cell:hover .cell-info {
-      opacity: 1;
-      transform: none;
     }
 </style>
