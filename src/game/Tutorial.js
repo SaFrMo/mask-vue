@@ -15,6 +15,6 @@ export default [
   { h: 'Combat', t: '.slice.placed', m: 'Notice that the health of both the Slice and the cell it occupied decreased. Getting a cell to 0 health does two things: ' },
   { h: 'Combat', t: '.slice.placed', m: 'First, it gives you all the energy in that cell, and second, it allows you to place newly-purchased Slices in that cell.' },
   { h: 'Combat', t: '.finish-turn', m: 'Continue pressing "Finish Turn" until a cell reaches 0 health.' },
-  { h: 'Scoring', t: '.goal-zone', m: 'When you\'ve done that, continue moving your Slices to the goal zone.' },
+  { h: 'Scoring', t: '.goal-zone', m: 'When you\'ve done that, continue moving your Slices to the goal zone. You can buy and move as many Slices as you like in a turn.' },
   { h: 'Scoring', t: '.meta .score ', m: 'Buy more slices and move them to the right of the board until you\'ve reached the required Score.' }
 ]

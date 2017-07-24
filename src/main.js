@@ -82,6 +82,11 @@ const store = new Vuex.Store({
       Vue.delete(state.placedSlices, oldIndex)
       state.selectedPlacedSlice = payload.index
       state.movedThisTurn.push(payload.index)
+
+      // Set cell to revealed
+      const x = payload.index % state.level.map.length
+      const y = Math.floor(payload.index / state.level.map.length)
+      state.level.map[y][x].revealed = true
     },
     'Move Slice to Goal' (state, payload) {
       state.score++
@@ -135,6 +140,9 @@ const store = new Vuex.Store({
         if (state.sliceQueue[key]) {
           state.player.money -= state.sliceQueue[key].cost
           Vue.set(state.placedSlices, key, state.sliceQueue[key])
+          const x = key % state.level.map.length
+          const y = Math.floor(key / state.level.map.length)
+          state.level.map[y][x].revealed = true
         }
       }
       state.sliceQueue = {}
