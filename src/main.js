@@ -109,9 +109,18 @@ const store = new Vuex.Store({
           // check for occupant
           const occupant = state.placedSlices[i]
           if (occupant) {
-            state.level.map[y][x].health -= occupant.attack
-            occupant.health -= state.level.map[y][x].attack
+            const cell = state.level.map[y][x]
+            cell.health -= occupant.attack
 
+            // Award points from dead cells
+            if (cell.health <= 0 && cell.value >= 0) {
+              state.player.money += cell.value
+              cell.value = 0
+            } else if (cell.health > 0) {
+              occupant.health -= cell.attack
+            }
+
+            // Remove dead slices
             if (occupant.health <= 0) {
               state.selectedPlacedSlice = false
               Vue.delete(state.placedSlices, i)

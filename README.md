@@ -2,6 +2,10 @@
 
 > Gameplay demo for Mask in Vue
 
+# Notes
+* Slices and cells need succinct way to reference each other - ID numbers?
+* Slices and cells all need `onTurnEnd` methods
+
 ## Build Setup
 
 ``` bash
