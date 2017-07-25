@@ -12,6 +12,12 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 
+const getBoardCoordinatesFromIndex = (index, state) => {
+  const x = index % state.level.map.length + 1
+  const y = Math.floor(index / state.level.map.length) + 1
+  return { x, y }
+}
+
 const store = new Vuex.Store({
   strict: true,
   state: {
@@ -87,6 +93,14 @@ const store = new Vuex.Store({
       const x = payload.index % state.level.map.length
       const y = Math.floor(payload.index / state.level.map.length)
       state.level.map[y][x].revealed = true
+
+      // Reveal intermediate cells
+      if (payload.intervening.length) {
+        for (let index of payload.intervening) {
+          const intermediate = getBoardCoordinatesFromIndex(index, state)
+          state.level.map[intermediate.y - 1][intermediate.x - 1].revealed = true
+        }
+      }
     },
     'Move Slice to Goal' (state, payload) {
       state.score++

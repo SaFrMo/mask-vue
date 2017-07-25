@@ -42,7 +42,8 @@ export default {
   props: ['x', 'y', 'index', 'cell'],
   data () {
     return {
-      canPlace: false
+      canPlace: false,
+      interveningIndices: []
     }
   },
   computed: {
@@ -59,6 +60,7 @@ export default {
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
     },
     canMove () {
+      this.interveningIndices = []
       // do we have a slice selected?
       if (
         this.$store.state.selectedPlacedSlice === false ||
@@ -101,6 +103,8 @@ export default {
                 const index = this.getIndexFromBoardCoordinates(intermediatePos.x, intermediatePos.y)
                 if (this.$store.state.placedSlices[index] && this.$store.state.placedSlices[index] !== false) {
                   return false
+                } else {
+                  this.interveningIndices.push(index)
                 }
               }
             }
@@ -149,7 +153,7 @@ export default {
         // is cell occupied? if so, select occupying slice
         this.$store.commit('Select Placed Slice', { index: this.index })
       } else if (this.canMove) {
-        this.$store.commit('Move Placed Slice', { index: this.index })
+        this.$store.commit('Move Placed Slice', { index: this.index, intervening: this.interveningIndices })
       } else if (this.$store.state.placer === this.index) {
         if (this.canPlace && this.$store.getters.availableMoney >= this.$store.getters.selectedSliceModel.cost) {
           this.$store.commit('Toggle Purchase', { index: this.index, sliceIndex: this.$store.state.selectedSliceIndex })
