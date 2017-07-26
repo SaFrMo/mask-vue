@@ -10,5 +10,6 @@ export default class {
     ]
 
     this.hostWall = this.opts.hostWall || 0.5
+    this.description = this.opts.description || '1 space north, south, east, or west'
   }
 }

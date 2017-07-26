@@ -5,13 +5,6 @@ class Slice {
     this.opts = opts || {}
     this.name = this.opts.name || 'Standard'
     this.placeLocations = this.opts.placeLocations || { x: 1 }
-    // this.safeZones = this.opts.safeZones || [
-    //   { x: 1 },
-    //   { x: -1 },
-    //   { y: 1 },
-    //   { y: -1 }
-    // ]
-    // in cell-width
     this.radius = this.opts.radius || 0.33
     this.cost = this.opts.cost || 50
     this.health = this.opts.health || 100
@@ -19,7 +12,7 @@ class Slice {
     this.attack = this.opts.attack || 20
     this.movement = this.opts.movement || new Movement()
     this.canScore = this.opts.hasOwnProperty('canScore') ? this.opts.canScore : true
-    this.tooltip = this.opts.tooltip || 'Standard offensive slice. Solid attack and defense; moves 1 square north-south-east-west.'
+    this.tooltip = this.opts.tooltip || 'Standard offensive slice. Solid attack and defense.'
   }
 
   canPlaceAt (index, slices) {
@@ -49,9 +42,10 @@ const Scout = new Slice({
       { x: -1, y: 1, iterations: 3 },
       { x: -1, y: -1, iterations: 3 }
     ],
-    hostWall: 1
+    hostWall: 1,
+    description: '3 spaces any direction'
   }),
-  tooltip: 'Fast slice designed to reveal as many cells\' info as possible before being destroyed. Moves up to 3 spaces in any direction. Cannot score.'
+  tooltip: 'Fast slice designed to reveal as many cells\' info as possible before being destroyed. Cannot score.'
 })
 const Farm = new Slice({
   name: 'Farm',
@@ -62,9 +56,10 @@ const Farm = new Slice({
     rules: [
       { x: 1, iterations: 1 }
     ],
-    hostWall: 0.1
+    hostWall: 0.1,
+    description: '1 space east'
   }),
-  tooltip: 'Slow, powerful slice. Can only move 1 space east at a time. Each turn it finishes on a depleted cell will yield 1/10 of that cell\'s value in Energy.'
+  tooltip: 'Slow, powerful slice. Each turn it finishes on a depleted cell will yield 1/10 of that cell\'s value in Energy.'
 })
 
 export default {

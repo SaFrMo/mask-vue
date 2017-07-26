@@ -8,6 +8,12 @@
                 <div class="slice-tooltip">
                   <h3>{{ sliceType.name }}</h3>
                   <p>{{ sliceType.tooltip }}</p>
+                  <ul class="stats">
+                    <li><span>HP:</span><span>{{ sliceType.maxHealth }}</span></li>
+                    <li><span>Attack:</span><span>{{ sliceType.attack }}</span></li>
+                    <li><span>Wall:</span><span>{{ sliceType.movement.hostWall <= 1 ? sliceType.movement.hostWall * 100 + '%' : sliceType.movement.hostWall + ' hp' }}</span></li>
+                    <li><span>Movement:</span><span>{{ sliceType.movement.description }}</span></li>
+                  </ul>
                 </div>
 
                 <transition name="expand">
@@ -67,6 +73,13 @@ export default {
   }
   .slice-tooltip h3 {
     border-bottom: 2px solid #ffffff;
+  }
+  .stats {
+    border-left: 2px solid #fff;
+    padding-left: 2px;
+  }
+  .slice-tooltip .stats li {
+    align-items: space-between;
   }
 
     .add-wrap {
