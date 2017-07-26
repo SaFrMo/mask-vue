@@ -82,7 +82,7 @@ export default {
     transform: translate(-50%, 25px);
     transition: left 0.4s, top 0.4s;
     border: 5px solid;
-    z-index: 10;
+    z-index: 100;
   }
   .headline-wrap {
     display: flex;

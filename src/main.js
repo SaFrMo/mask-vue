@@ -26,12 +26,12 @@ const store = new Vuex.Store({
     levels: [
       new Game.Level(),
       new Game.Level(5, [
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell() ]
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ]
       ])
     ],
     currentLevel: 0,
@@ -173,6 +173,15 @@ const store = new Vuex.Store({
       state.score = 0
       state.turn = 1
       state.player.money = 500
+    },
+
+    // DEBUG BELOW
+    'Toggle Cell Info' (state, payload) {
+      for (let y of state.level.map) {
+        for (let cell of y) {
+          cell.revealed = !cell.revealed
+        }
+      }
     }
   }
 })

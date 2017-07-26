@@ -5,8 +5,13 @@
         <ul class="add-wrap">
             <li v-for="(sliceType, index) in sliceTypes">
 
+                <div class="slice-tooltip">
+                  <h3>{{ sliceType.name }}</h3>
+                  <p>{{ sliceType.tooltip }}</p>
+                </div>
+
                 <transition name="expand">
-                    <div data-tooltip="test" v-if="$store.state.selectedSliceIndex === index" class="underlay"></div>
+                    <div v-if="$store.state.selectedSliceIndex === index" class="underlay"></div>
                 </transition>
 
                 <h3>{{ sliceType.name }}</h3>
@@ -38,6 +43,32 @@ export default {
 
 <style scoped>
 
+  .slice-tooltip {
+    position: absolute;
+    background-color: steelblue;
+    width: 100%;
+    min-height: 100px;
+    left: 100%;
+    border-radius: 8px;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(-10px);
+    pointer-events: none;
+    font-weight: 400;
+    text-align: left;
+
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  li:hover .slice-tooltip {
+    opacity: 1;
+    transform: none;
+  }
+  .slice-tooltip h3 {
+    border-bottom: 2px solid #ffffff;
+  }
+
     .add-wrap {
         width: 250px;
         padding: 0;
@@ -65,7 +96,7 @@ export default {
     .expand-leave-to {
         right: 100%;
     }
-    .add-wrap li > *:not(.underlay) {
+    .add-wrap li > *:not(.underlay):not(.slice-tooltip) {
         width: 33.33%;
         text-align: left;
         margin: 10px;

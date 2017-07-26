@@ -23,6 +23,8 @@
 
     <message-modal/>
 
+    <dev-mode/>
+
   </div>
 
 </template>
@@ -35,6 +37,7 @@ import SliceRoster from './slice-roster.vue'
 import Tooltip from './tooltip.vue'
 import PlayerInfo from './player-info'
 import MessageModal from './message-modal'
+import DevMode from './dev-mode'
 
 export default {
   mounted () {
@@ -50,7 +53,8 @@ export default {
     'slice-roster': SliceRoster,
     'tooltip': Tooltip,
     'player-info': PlayerInfo,
-    'message-modal': MessageModal
+    'message-modal': MessageModal,
+    'dev-mode': DevMode
   }
 }
 

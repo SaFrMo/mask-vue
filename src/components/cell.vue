@@ -69,12 +69,22 @@ export default {
       ) return false
 
       // can our slice move?
-      if (this.$store.state.movedThisTurn.indexOf(this.$store.state.selectedPlacedSlice) !== -1) {
-        return false
-      }
+      if (
+        this.$store.state.movedThisTurn.indexOf(this.$store.state.selectedPlacedSlice) !== -1
+      ) return false
 
       // where is that slice?
       const slicePosition = this.getBoardCoordinatesFromIndex(this.$store.state.selectedPlacedSlice)
+
+      const cell = this.$store.state.level.map[slicePosition.y - 1][slicePosition.x - 1]
+      const cellHealth = cell.health
+      const cellPercent = cell.health / cell.maxHealth
+      const wall = this.$store.getters.selectedPlacedSlice.movement.hostWall
+      if (wall <= 1 && cellPercent > wall) {
+        return false
+      } else if (wall > 1 && cellHealth > wall) {
+        return false
+      }
 
       // cycle through slice rules
       for (let rule of this.$store.state.placedSlices[this.$store.state.selectedPlacedSlice].movement.rules) {
@@ -236,10 +246,11 @@ export default {
       bottom: 0;
       left: 0;
       background-color: #fff;
-      font-size: 10px;
+      font-size: 12px;
       color: #000;
       padding: 2px;
       pointer-events: none;
       z-index: 50;
+      text-align: left;
     }
 </style>
