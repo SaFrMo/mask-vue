@@ -25,6 +25,7 @@
         <div class="cell-info">
           <div v-if="cell.revealed">
             attack: {{ cell.attack }}<br/>
+            max hp: {{ cell.maxHealth }}<br/>
             value: ${{ cell.value }}
           </div>
 

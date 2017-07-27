@@ -18,22 +18,24 @@ const getBoardCoordinatesFromIndex = (index, state) => {
   return { x, y }
 }
 
+const hardLevel = new Game.Level(5, [
+  [ new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+  [ new Game.Cell(50), new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+  [ new Game.Cell(50), new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
+  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ]
+])
+
 const store = new Vuex.Store({
   strict: true,
   state: {
     player: new Game.Player(),
-    level: new Game.Level(),
     levels: [
-      new Game.Level(),
-      new Game.Level(5, [
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-        [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ]
-      ])
+      // new Game.Level(),
+      hardLevel
     ],
+    level: hardLevel,
     currentLevel: 0,
     placer: 0,
     sliceTypes: Game.Slice.Presets,
@@ -180,6 +182,16 @@ const store = new Vuex.Store({
       for (let y of state.level.map) {
         for (let cell of y) {
           cell.revealed = !cell.revealed
+        }
+      }
+    },
+    'Randomize Level' (state, payload) {
+      for (let y of state.level.map) {
+        for (let cell of y) {
+          cell.health = cell.maxHealth = Math.floor(Math.random() * 100)
+          cell.attack = Math.floor(Math.random() * 100)
+          cell.value = Math.floor(Math.random() * 100)
+          cell.revealed = false
         }
       }
     }
