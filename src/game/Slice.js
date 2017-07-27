@@ -59,7 +59,7 @@ const Farm = new Slice({
     hostWall: 0.1,
     description: '1 space east'
   }),
-  tooltip: 'Slow, powerful slice. Each turn it finishes on a depleted cell will yield 1/10 of that cell\'s value in Energy.'
+  tooltip: 'Slow, powerful slice. Each turn it finishes on a depleted cell will yield 1/10 of that cell\'s Attack in Energy.'
 })
 
 export default {

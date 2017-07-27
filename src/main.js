@@ -141,6 +141,11 @@ const store = new Vuex.Store({
               occupant.health -= cell.attack
             }
 
+            // Award Farm points
+            if (cell.health <= 0 && occupant.name === 'Farm') {
+              state.player.money += Math.ceil(cell.attack / 10)
+            }
+
             // Remove dead slices
             if (occupant.health <= 0) {
               state.selectedPlacedSlice = false
@@ -166,6 +171,9 @@ const store = new Vuex.Store({
       // clear movement list
       state.movedThisTurn = []
 
+      // limit player money
+      state.player.money = Math.min(state.player.money, 500)
+
       // increment turn counter
       state.turn++
     },
@@ -188,9 +196,9 @@ const store = new Vuex.Store({
     'Randomize Level' (state, payload) {
       for (let y of state.level.map) {
         for (let cell of y) {
-          cell.health = cell.maxHealth = Math.floor(Math.random() * 100)
-          cell.attack = Math.floor(Math.random() * 100)
-          cell.value = Math.floor(Math.random() * 100)
+          cell.health = cell.maxHealth = Math.ceil(Math.random() * 100)
+          cell.attack = Math.ceil(Math.random() * 100)
+          cell.value = Math.ceil(Math.random() * 100)
           cell.revealed = false
         }
       }
