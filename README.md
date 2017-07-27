@@ -1,10 +1,19 @@
-# mask-vue
+# Table of Contents
+1. [Slices](#slices)
+  1. [Implemented](#implemented-slices)
+  1. [Ideas](#slice-ideas)
+1. [Build Setup](#build-setup)
 
-> Gameplay demo for Mask in Vue
+# Slices
 
-# Notes
-* Slices and cells need succinct way to reference each other - ID numbers?
-* Slices and cells all need `onTurnEnd` methods
+## Implemented Slices
+
+### Standard
+* 100 hp
+
+ (TODO: finish)
+
+## Slice Ideas
 
 ## Build Setup
 
