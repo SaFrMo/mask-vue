@@ -1,7 +1,10 @@
 <template>
-  <div class="grid-wrap">
+  <div class="grid-wrap"  >
 
     <div class="game-grid">
+
+      <div class="art" :style="{ 'background-image': 'url(./static/mona-lisa.png)', 'background-size': 'cover' }"></div>
+
         <div class="row" v-for="y in level.map.length">
             <single-cell
                 v-for="x in level.map.length"
@@ -76,11 +79,17 @@ export default {
         position: relative;
         margin-right: 100px;
     }
+    .art {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
     .grid-wrap {
       position: relative;
     }
     .cell {
-      background-color: #999;
       width: 100px;
       height: 100px;
       border: 1px solid #fff;

@@ -36,5 +36,8 @@ body {
   display: flex;
   align-items: center;
 }
+.hidden {
+  opacity: 0;
+}
 
 </style>

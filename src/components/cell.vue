@@ -216,11 +216,13 @@ export default {
         bottom: 0;
         left: 0;
         background-color: #55c;
+        opacity: 0.4;
 
         transition: height 0.4s;
     }
     .underlay.next {
       background-color: #5c5;
+      opacity: 0.4;
     }
     .label {
         position: relative;

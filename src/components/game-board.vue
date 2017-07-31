@@ -46,6 +46,8 @@ export default {
         this.$store.commit('Finish Turn')
       }
     }
+
+    this.$store.commit('Change Tutorial Step', { delta: 0 })
   },
   components: {
     'game-grid': GameGrid,

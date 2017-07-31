@@ -1,5 +1,13 @@
 export default [
-  { h: 'Welcome!', m: 'Welcome to the Zinnia proof-of-concept! Press "next" to continue.' },
+  { h: 'Welcome!',
+    m: 'Welcome to the Zinnia proof-of-concept! Press "next" to continue.',
+    callback: () => {
+      document.querySelector('.slice-roster').classList.add('hidden')
+      document.querySelector('.player-info').classList.add('hidden')
+      document.querySelector('.meta').classList.add('hidden')
+      document.querySelector('.control-zone').classList.add('hidden')
+    }
+  },
   { h: 'Goal', m: 'In Zinnia, you\'re playing as a freelancer helping hack-proof "smart paint" murals.' },
   { h: 'Goal', m: 'These works of street art are living graffiti that can move, respond to, and interact with their surroundings...' },
   { h: 'Goal', m: '...and their low cost and immediate appeal are making waves across society, opening up plenty of opportunities for malicious hackers.' },

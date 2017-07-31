@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import App from './App'
 import _ from 'lodash'
 import tutorial from './game/Tutorial'
+import tutorialLevel from './levels/mona-lisa'
 
 import Game from './game'
 
@@ -33,9 +34,10 @@ const store = new Vuex.Store({
     player: new Game.Player(),
     levels: [
       // new Game.Level(),
+      tutorialLevel,
       hardLevel
     ],
-    level: hardLevel,
+    level: tutorialLevel,
     currentLevel: 0,
     placer: 0,
     sliceTypes: Game.Slice.Presets,
@@ -72,6 +74,9 @@ const store = new Vuex.Store({
   mutations: {
     'Change Tutorial Step' (state, payload) {
       state.currentTutorialStep = Math.max(state.currentTutorialStep + payload.delta, 0)
+      if (state.tutorial[state.currentTutorialStep] && state.tutorial[state.currentTutorialStep].callback) {
+        state.tutorial[state.currentTutorialStep].callback()
+      }
     },
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
