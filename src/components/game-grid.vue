@@ -3,7 +3,7 @@
 
     <div class="game-grid">
 
-      <div class="art" :style="{ 'background-image': 'url(./static/mona-lisa.png)', 'background-size': 'cover' }"></div>
+      <div class="art" :style="{ 'background-image': `url(./static/${$store.state.level.art})`, 'background-size': 'cover' }"></div>
 
         <div class="row" v-for="y in level.map.length">
             <single-cell
