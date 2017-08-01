@@ -21,7 +21,6 @@ export default [
     } },
   { h: 'Buying Slices', t: 'circle.placer', m: 'You\'ll attempt infiltrations using "Slices." Click on the pulsing circle to queue up your first slice.' },
   { h: 'Buying Slices', t: '.expenses', m: 'You can see the total cost of your queued slices here, and can click on a queued slice to remove it from the queue. You won\'t purchase the items in the queue until you finish your turn.' },
-  // { h: 'Buying Slices', t: '.cell[x="1"][y="2"]', m: 'Right now, you can only place slices on the first column. Click any cell in the first column to select it, then click again to queue another slice.' },
   { h: 'Turns',
     t: '.finish-turn',
     m: 'Make sure at least one Slice is queued for purchase, then click the "Finish Turn" button to finish the turn and buy those Slice(s).',
@@ -32,17 +31,23 @@ export default [
   { h: 'Cells', t: '.cell-info', m: 'Each turn that a Slice finishes in a Cell, that Slice and Cell will attack each other, reducing the other\'s HP.' },
   { h: 'Cells',
     t: '.slice-block',
-    m: 'You can see your placed Slices\'s health in the roster here. You can also click on a Slice either on the board or in this roster to select it.',
+    m: 'You can see your placed Slice health in the roster here. You can also click on a Slice either on the board or in this roster to select it.',
     callback: () => {
       document.querySelector('.slice-roster').classList.remove('hidden')
     } },
   { h: 'Cells', t: '.finish-turn', m: 'Click "Finish Turn" again to see finish your turn and see the attack round in action.' },
-  { h: 'Turns', t: '.slice.placed', m: 'Your goal is to get your Slices to the far right of the board. Click your Slice to see where it can move.' },
-  { h: 'Turns', t: '.slice.placed', m: 'Click on one of the highlighted cells to move to that cell.' },
-  { h: 'Turns', t: '.slice.placed', m: 'You can only move each Slice once per turn. Press the "Finish Turn" button (or the spacebar) to end your turn.' },
-  { h: 'Combat', t: '.slice.placed', m: 'Notice that the health of both the Slice and the cell it occupied decreased. Getting a cell to 0 health does two things: ' },
-  { h: 'Combat', t: '.slice.placed', m: 'First, it gives you all the energy in that cell, and second, it allows you to place newly-purchased Slices in that cell.' },
-  { h: 'Combat', t: '.finish-turn', m: 'Continue pressing "Finish Turn" until a cell reaches 0 health.' },
-  { h: 'Scoring', t: '.goal-zone', m: 'When you\'ve done that, continue moving your Slices to the goal zone. You can buy and move as many Slices as you like in a turn.' },
-  { h: 'Scoring', t: '.meta .score ', m: 'Buy more slices and move them to the right of the board until you\'ve reached the required Score.' }
+  { h: 'Goal', t: '.slice.placed', m: 'Your goal is to get a target number of Slices to the far right of the board, to the space marked "Goal," before running out of Energy.' },
+  { h: 'Goal',
+    t: '.meta .score',
+    m: '(You can see that target score at the bottom of the screen here.)',
+    callback: () => {
+      document.querySelector('.meta .left').classList.remove('hidden')
+    } },
+  { h: 'Goal', t: '.wall', m: 'You can only move a Slice when the Cell it occupies is at or below a given health level, marked by a black line on the health bar.' },
+  { h: 'Goal', t: '.slice.placed', m: 'Since this Cell\'s health is at that line, you can move this Slice. Select it and you\'ll see the Cells it\'s allowed to move to outlined in red.' },
+  { h: 'Goal', t: '.can-move', m: 'Click on the Cell to the right to move your Slice closer to the goal.' },
+  { h: 'Goal', t: '.finish-turn', m: 'Click "Finish Turn" so you can move your Slice again.' },
+  { h: 'Goal', t: '.finish-turn', m: 'Move your Slice a space closer to the goal, then click "Finish Turn" again.' },
+  { h: 'Goal', t: '.slice.placed', m: 'Move your Slice into the goal space, scoring a point and removing the Slice from the grid.' },
+  { h: 'Goal', t: '.meta .score', m: 'Finish up the level by buying and moving Slices till you reach the target 3 points.' }
 ]

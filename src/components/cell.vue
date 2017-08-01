@@ -13,6 +13,7 @@
           <span v-if="cell.revealed" class="max-hp">{{ cell.maxHealth }}</span>
           <span class="underlay current" :style="{ height: currentHeight }"></span>
           <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
+          <span v-if="occupant" class="wall" :style="{ bottom: `${occupant.movement.hostWall * 100}%` }"></span>
         </div>
 
         <span class="label"></span>
@@ -53,11 +54,13 @@ export default {
     currentHeight () {
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
     },
+    occupant () {
+      return this.$store.state.placedSlices[this.index]
+    },
     nextTurnHeight () {
       // get occupant of this cell
-      const occupant = this.$store.state.placedSlices[this.index]
-      if (occupant) {
-        const nextHealth = this.cell.health - occupant.attack
+      if (this.occupant) {
+        const nextHealth = this.cell.health - this.occupant.attack
         return (nextHealth / this.cell.maxHealth) * 100 + '%'
       }
       return (this.cell.health / this.cell.maxHealth) * 100 + '%'
@@ -242,6 +245,15 @@ export default {
       opacity: 0.4;
 
       display: none;
+    }
+    .wall {
+      position: absolute;
+      background-color: #000;
+      width: 100%;
+      height: 2px;
+      left: 1px;
+
+      transition: bottom 0.4s;
     }
     .label {
         position: relative;
