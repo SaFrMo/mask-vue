@@ -4,8 +4,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
 import _ from 'lodash'
-import tutorial from './game/Tutorial'
 import tutorialLevel from './levels/mona-lisa'
+import SecondLevel from './levels/second-level'
 
 import Game from './game'
 
@@ -19,23 +19,13 @@ const getBoardCoordinatesFromIndex = (index, state) => {
   return { x, y }
 }
 
-const hardLevel = new Game.Level(5, [
-  [ new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-  [ new Game.Cell(50), new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-  [ new Game.Cell(50), new Game.Cell({ health: 50, attack: 0 }), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ],
-  [ new Game.Cell(50), new Game.Cell(), new Game.Cell(), new Game.Cell(50), new Game.Cell(), new Game.Cell({ health: 200, attack: 40 }) ]
-])
-
 const store = new Vuex.Store({
   strict: true,
   state: {
     player: new Game.Player(),
     levels: [
-      // new Game.Level(),
       tutorialLevel,
-      hardLevel
+      SecondLevel
     ],
     level: tutorialLevel,
     currentLevel: 0,
@@ -48,7 +38,7 @@ const store = new Vuex.Store({
     movedThisTurn: [],
     turn: 1,
     score: 0,
-    tutorial,
+    tutorial: tutorialLevel.tutorial,
     currentTutorialStep: 0
   },
   getters: {
@@ -188,6 +178,8 @@ const store = new Vuex.Store({
       state.score = 0
       state.turn = 1
       state.player.money = 500
+      state.tutorial = state.level.tutorial
+      state.currentTutorialStep = 0
     },
 
     // DEBUG BELOW

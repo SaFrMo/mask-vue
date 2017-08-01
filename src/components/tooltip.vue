@@ -55,6 +55,7 @@ export default {
     step () {
       if (
         this.$store.state.currentTutorialStep === false ||
+        !this.$store.state.tutorial ||
         this.$store.state.currentTutorialStep >= this.$store.state.tutorial.length
       ) return false
 
