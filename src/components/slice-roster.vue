@@ -14,6 +14,7 @@
         @mouseleave="mouseLeave(index)"
         @click="$store.commit('Select Placed Slice', { index })">
         <h3>{{ slice.name }}</h3>
+        <span class="health-readout">{{ slice.health }} / {{ slice.maxHealth }}</span>
         <div class="health-wrap">
           <div class="health-bar" :style="{ width: (slice.health / slice.maxHealth) * 100 + '%' }"></div>
         </div>

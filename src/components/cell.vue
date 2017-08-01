@@ -9,8 +9,11 @@
         :x="x"
         :y="y">
 
-        <span class="underlay current" :style="{ height: currentHeight }"></span>
-        <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
+        <div class="underlay-wrap">
+          <span v-if="cell.revealed" class="max-hp">{{ cell.maxHealth }}</span>
+          <span class="underlay current" :style="{ height: currentHeight }"></span>
+          <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
+        </div>
 
         <span class="label"></span>
 
@@ -25,7 +28,6 @@
         <div class="cell-info">
           <div v-if="cell.revealed">
             attack: {{ cell.attack }}<br/>
-            max hp: {{ cell.maxHealth }}<br/>
             value: ${{ cell.value }}
           </div>
 
@@ -210,19 +212,36 @@ export default {
       border-radius: 8px;
       box-sizing: border-box;
     }
+    .underlay-wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 10px;
+      background-color: #fff;
+    }
+    .max-hp {
+      position: absolute;
+      background-color: #fff;
+      color: #000;
+      right: 100%;
+      font-size: 12px;
+    }
     .underlay {
         position: absolute;
         right: 0;
         bottom: 0;
-        left: 0;
-        background-color: #55c;
-        opacity: 0.4;
+        width: 8px;
+
+        background-color: #5c5;
 
         transition: height 0.4s;
     }
     .underlay.next {
       background-color: #5c5;
       opacity: 0.4;
+
+      display: none;
     }
     .label {
         position: relative;
