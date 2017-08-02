@@ -3,7 +3,7 @@ import store from '../store'
 export default [
   { h: 'Tutorial, Part 2', m: 'You\'ve seen what it\'s like to go against an empty grid, but there are plenty of ways for smart graffiti to defend itself.' },
   { h: 'Tutorial, Part 2',
-    m: 'Some Cells have much higher attack or defense than others, making them more dangerous to cross.',
+    m: 'Some Cells have much higher attack than others, making them more dangerous to land on.',
     callback: () => {
       document.querySelector('.slice-roster').classList.remove('hidden')
       document.querySelector('.player-info').classList.remove('hidden')
@@ -13,7 +13,7 @@ export default [
   },
   { h: 'Cell Variations',
     t: '.cell[index="0"] .cell-info',
-    m: 'Artists like to place these more dangerous Cells on places where it makes sense in the mural. For example, the horns on this mural are much more tougher, both in attack and HP...',
+    m: 'Artists like to place these attack-focused Cells on places where it makes sense in the mural. For example, the horns on this mural have a much higher attack value...',
     callback: () => {
       store.commit('Set Cell Revealed', { x: 0, y: 0, revealed: true })
     } },
@@ -37,6 +37,9 @@ export default [
     { h: 'Slice Variations', m: 'Move the Scout up to the top right space on the grid.', t: '.cell[index="3"] .cell-info' },
     { h: 'Slice Variations', m: 'You\'ll see that the Scout revealed the information on both the final Cell it landed on as well as the Cells it crossed over.', t: '.cell[index="13"] .cell-info' },
     { h: 'Slice Variations', m: 'Finish the turn so the attack round can start.', t: '.finish-turn' },
-    { h: 'Slice Variations', m: 'The Scout has a much lower attack and much less HP than a standard Slice, so you\'ll need to use it economically. Move it to the bottom-right Cell on the grid.', t: '.cell[index="15"] .cell-info' }
+    { h: 'Slice Variations', m: 'The Scout has a much lower attack and less HP than a standard Slice, so you\'ll need to use it economically. Move it to the bottom-right Cell on the grid.', t: '.cell[index="15"] .cell-info' },
+    { h: 'Slice Variations', m: 'The final column usually has the highest HP, since those Cells are the last defense against infiltration like yours.', t: '.cell[index="15"] .cell-info' },
+    { h: 'Slice Variations', m: 'Finish the turn, then move the Scout one more time however you like. Since a Scout can\'t score, it\'ll usually stay on the grid until destroyed by a Cell.', t: '.finish-turn' },
+    { h: 'Slice Variations', m: '........', t: '.finish-turn' }
 
 ]

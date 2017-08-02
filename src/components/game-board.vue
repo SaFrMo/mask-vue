@@ -18,7 +18,10 @@
         <h3 class="score">score: {{ $store.state.score }} / {{ $store.state.level.goal }}</h3>
       </div>
 
-      <button class="finish-turn" @click="$store.commit('Finish Turn')">Finish Turn</button>
+      <button class="finish-turn" @click="$store.commit('Finish Turn')">
+        {{ queueExists ? 'Purchase Queue & ' : '' }}
+        Finish Turn
+      </button>
     </div>
 
     <message-modal/>
@@ -31,6 +34,7 @@
 
 <script>
 
+import _ from 'lodash'
 import GameGrid from './game-grid.vue'
 import ControlZone from './control-zone.vue'
 import SliceRoster from './slice-roster.vue'
@@ -40,6 +44,13 @@ import MessageModal from './message-modal'
 import DevMode from './dev-mode'
 
 export default {
+  computed: {
+    queueExists () {
+      // checks if the queue has a length and if it contains any non-false values
+      return _.keys(this.$store.state.sliceQueue).length &&
+        _.find(_.values(this.$store.state.sliceQueue), function (v) { return v })
+    }
+  },
   mounted () {
     window.onkeyup = evt => {
       if (evt.keyCode === 32) {
