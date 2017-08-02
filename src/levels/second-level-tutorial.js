@@ -1,13 +1,42 @@
+import store from '../store'
+
 export default [
-  { h: 'Goal', m: 'You\'ve seen what it\'s like to go against an empty grid, but there are plenty of ways for smart graffiti to defend itself.' },
+  { h: 'Tutorial, Part 2', m: 'You\'ve seen what it\'s like to go against an empty grid, but there are plenty of ways for smart graffiti to defend itself.' },
   { h: 'Tutorial, Part 2',
-    m: '...........',
+    m: 'Some Cells have much higher attack or defense than others, making them more dangerous to cross.',
     callback: () => {
       document.querySelector('.slice-roster').classList.remove('hidden')
       document.querySelector('.player-info').classList.remove('hidden')
       document.querySelector('.meta').classList.remove('hidden')
       document.querySelector('.meta .left').classList.remove('hidden')
-      document.querySelector('.control-zone').classList.remove('hidden')
     }
-  }
+  },
+  { h: 'Cell Variations',
+    t: '.cell[index="0"] .cell-info',
+    m: 'Artists like to place these more dangerous Cells on places where it makes sense in the mural. For example, the horns on this mural are much more tougher, both in attack and HP...',
+    callback: () => {
+      store.commit('Set Cell Revealed', { x: 0, y: 0, revealed: true })
+    } },
+  { h: 'Cell Variations',
+    t: '.cell[index="12"] .cell-info',
+    m: '...than the undefended space at the bottom of the piece.',
+    callback: () => {
+      store.commit('Set Cell Revealed', { x: 0, y: 3, revealed: true })
+    } },
+    { h: 'Cell Variations', m: 'These stats won\'t be shown at the start of a normal level. Make sure you observe the mural carefully before placing Slices!' },
+    { h: 'Slice Variations', m: 'Alternately, you can use some of the unique abilities of different Slices to explore the grid.' },
+  { h: 'Slice Variations',
+    t: '.add-wrap > li:nth-child(2) .slice-tooltip .stats li:last-child',
+    m: 'Mouse over the Scout Slice type to learn more about it, then click to select it.',
+    callback: () => {
+      document.querySelector('.control-zone').classList.remove('hidden')
+      document.querySelector('.add-wrap > li:last-of-type').classList.add('hidden')
+    } },
+    { h: 'Slice Variations', m: 'You\'ll see the placer change size or shape to reflect the new Slice type you\'ve selected. Queue and purchase a Scout at the bottom-left Cell.', t: '.cell[index="12"]' },
+    { h: 'Slice Variations', m: 'Select the new Scout when it has been placed. You\'ll see that it can move immediately, even when a Cell is at full health, and that it can move up to three spaces in any direction.', t: '.meta' },
+    { h: 'Slice Variations', m: 'Move the Scout up to the top right space on the grid.', t: '.cell[index="3"] .cell-info' },
+    { h: 'Slice Variations', m: 'You\'ll see that the Scout revealed the information on both the final Cell it landed on as well as the Cells it crossed over.', t: '.cell[index="13"] .cell-info' },
+    { h: 'Slice Variations', m: 'Finish the turn so the attack round can start.', t: '.finish-turn' },
+    { h: 'Slice Variations', m: 'The Scout has a much lower attack and much less HP than a standard Slice, so you\'ll need to use it economically. Move it to the bottom-right Cell on the grid.', t: '.cell[index="15"] .cell-info' }
+
 ]
