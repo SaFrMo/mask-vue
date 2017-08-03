@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
   .tooltip {
-    position: fixed;
+    position: absolute;
     background-color: #c99;
     padding: 20px;
     border-radius: 10px;

@@ -10,7 +10,7 @@
         :y="y">
 
         <div class="underlay-wrap">
-          <span v-if="cell.revealed" class="max-hp">{{ cell.maxHealth }}</span>
+          <span v-if="cell.revealed" class="max-hp">HP: {{ cell.health }} / {{ cell.maxHealth }}</span>
           <span class="underlay current" :style="{ height: currentHeight }"></span>
           <span class="underlay next" :style="{ height: nextTurnHeight }"></span>
           <span v-if="occupant" class="wall" :style="{ bottom: `${occupant.movement.hostWall * 100}%` }"></span>
@@ -229,6 +229,7 @@ export default {
       color: #000;
       right: 100%;
       font-size: 12px;
+      white-space: nowrap;
     }
     .underlay {
         position: absolute;

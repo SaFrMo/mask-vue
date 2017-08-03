@@ -54,16 +54,17 @@ export default {
     background-color: steelblue;
     width: 100%;
     min-height: 100px;
-    left: 100%;
+    right: 100%;
     border-radius: 8px;
     color: #fff;
     padding: 20px;
     box-sizing: border-box;
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateX(10px);
     pointer-events: none;
     font-weight: 400;
     text-align: left;
+    z-index: 100;
 
     transition: opacity 0.4s, transform 0.4s;
   }
