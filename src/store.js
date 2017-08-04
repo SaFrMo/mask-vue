@@ -3,6 +3,7 @@ import _ from 'lodash'
 import Vuex from 'vuex'
 import tutorialLevel from './levels/mona-lisa'
 import SecondLevel from './levels/second-level'
+import ThirdLevel from './levels/third-level'
 import Game from './game'
 
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ export default new Vuex.Store({
     player: new Game.Player(),
     levels: [
       tutorialLevel,
-      SecondLevel
+      SecondLevel,
+      ThirdLevel
     ],
     level: tutorialLevel,
     currentLevel: 0,
@@ -176,6 +178,10 @@ export default new Vuex.Store({
       state.turn = 1
       state.player.money = 500
       state.tutorial = state.level.tutorial
+      if (state.tutorial === false) {
+        // Remove hidden items if there's no tutorial
+        document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'))
+      }
       state.currentTutorialStep = 0
     },
 
