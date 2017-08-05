@@ -116,6 +116,12 @@ export default new Vuex.Store({
         Vue.set(state.sliceQueue, payload.index, _.cloneDeep(state.sliceTypes[payload.sliceIndex]))
       }
     },
+    'Run Healing' (state, payload) {
+      state.placedSlices[payload.patientIndex].health += 100
+      state.placedSlices[payload.patientIndex].health = Math.min(state.placedSlices[payload.patientIndex].health, state.placedSlices[payload.patientIndex].maxHealth)
+      state.selectedPlacedSlice = false
+      Vue.delete(state.placedSlices, payload.medicIndex)
+    },
     'Finish Turn' (state, payload) {
       // apply health changes to all cells and slices
       let i = 0

@@ -14,6 +14,7 @@
  (TODO: finish)
 
 ## Slice Ideas
+* __Medic__: Move onto an occupied Cell to self-destruct and restore health to occupant
 
 ## Build Setup
 

@@ -71,7 +71,8 @@ export default {
       if (
         this.$store.state.selectedPlacedSlice === false ||
         this.$store.state.selectedPlacedSlice === this.index ||
-        (this.$store.state.placedSlices[this.index] && this.$store.state.placedSlices[this.index] !== false)
+        ((this.$store.getters.selectedPlacedSlice && this.$store.getters.selectedPlacedSlice.name !== 'Medic') &&
+          this.$store.state.placedSlices[this.index] && this.$store.state.placedSlices[this.index] !== false)
       ) return false
 
       // can our slice move?
@@ -165,7 +166,12 @@ export default {
       this.canPlace = false
     },
     clicked () {
-      if (this.$store.state.placedSlices[this.index]) {
+      // run medic healing routine
+      if (this.$store.getters.selectedPlacedSlice.name === 'Medic' &&
+      this.index !== this.$store.state.selectedPlacedSlice) {
+        // remove medic and heal other cell
+        this.$store.commit('Run Healing', { medicIndex: this.$store.state.selectedPlacedSlice, patientIndex: this.index })
+      } else if (this.$store.state.placedSlices[this.index]) {
         // is cell occupied? if so, select occupying slice
         this.$store.commit('Select Placed Slice', { index: this.index })
       } else if (this.canMove) {

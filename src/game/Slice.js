@@ -61,8 +61,30 @@ const Farm = new Slice({
   }),
   tooltip: 'Slow, powerful slice. Each turn it finishes on a depleted cell will yield 1/10 of that cell\'s Attack in Energy.'
 })
+const Medic = new Slice({
+  name: 'Medic',
+  radius: 0.2,
+  cost: 75,
+  health: 50,
+  movement: new Movement({
+    rules: [
+      { x: 1, iterations: 3, options: ['jump'] },
+      { x: -1, iterations: 3, options: ['jump'] },
+      { y: 1, iterations: 3, options: ['jump'] },
+      { y: -1, iterations: 3, options: ['jump'] },
+      { x: 1, y: 1, iterations: 3, options: ['jump'] },
+      { x: 1, y: -1, iterations: 3, options: ['jump'] },
+      { x: -1, y: 1, iterations: 3, options: ['jump'] },
+      { x: -1, y: -1, iterations: 3, options: ['jump'] }
+    ],
+    hostWall: 0.9,
+    description: '3 spaces any direction'
+  }),
+  tooltip: 'Moving onto an existing Slice restores that Slice\'s health by 100 and destroys the Medic. Cannot score.'
+})
 
 export default {
   Slice,
-  Presets: [ Standard, Scout, Farm ]
+  Presets: [ Standard, Scout, /* Farm, */ Medic ],
+  Farm
 }
