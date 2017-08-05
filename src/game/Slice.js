@@ -66,6 +66,7 @@ const Medic = new Slice({
   radius: 0.2,
   cost: 75,
   health: 50,
+  canScore: false,
   movement: new Movement({
     rules: [
       { x: 1, iterations: 3, options: ['jump'] },
@@ -85,6 +86,5 @@ const Medic = new Slice({
 
 export default {
   Slice,
-  Presets: [ Standard, Scout, /* Farm, */ Medic ],
-  Farm
+  Presets: [ Standard, Scout, Farm, Medic ]
 }

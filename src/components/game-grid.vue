@@ -45,12 +45,16 @@ export default {
       // false if the selected slice can't score
       const selected = this.$store.getters.selectedPlacedSlice
       if (!selected || !selected.canScore) return false
-      const sliceAtEnd = this.getCoordinates(this.$store.state.selectedPlacedSlice).x >= this.$store.state.level.map.length
+
+      const coords = this.getCoordinates(this.$store.state.selectedPlacedSlice)
+      const cell = this.$store.state.level.map[coords.y - 1][coords.x - 1]
+      const sliceAtEnd = coords.x >= this.$store.state.level.map.length
       let sliceCanMove = false
+      const isBelowWall = cell && cell.health / cell.maxHealth <= selected.movement.hostWall
       if (this.$store.state.movedThisTurn.indexOf(this.$store.state.selectedPlacedSlice) === -1) {
         sliceCanMove = true
       }
-      return sliceAtEnd && sliceCanMove
+      return sliceAtEnd && sliceCanMove && isBelowWall
     }
   },
   methods: {
