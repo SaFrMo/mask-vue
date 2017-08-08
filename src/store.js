@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import tutorialLevel from './levels/mona-lisa'
 import SecondLevel from './levels/second-level'
 import ThirdLevel from './levels/third-level'
+import FourthLevel from './levels/fourth-level'
 import Game from './game'
 
 Vue.use(Vuex)
@@ -21,7 +22,8 @@ export default new Vuex.Store({
     levels: [
       tutorialLevel,
       SecondLevel,
-      ThirdLevel
+      ThirdLevel,
+      FourthLevel
     ],
     level: tutorialLevel,
     currentLevel: 0,
