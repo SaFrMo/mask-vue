@@ -3,7 +3,7 @@
     <div class="control-zone">
 
         <ul class="add-wrap">
-            <li v-for="(sliceType, index) in sliceTypes">
+            <li v-for="(sliceType, index) in sliceTypes" :class="{ hidden: index > 1 }">
 
                 <div class="slice-tooltip">
                   <h3>{{ sliceType.name }}</h3>

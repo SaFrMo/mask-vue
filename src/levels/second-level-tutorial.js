@@ -44,6 +44,6 @@ export default [
     { h: 'Cell Rewards', m: 'First, it will give you that Cell\'s value in Energy...' },
     { h: 'Cell Rewards', m: '...and second, it will allow you to place a new Slice directly on that Cell, instead of being constrained to only placing new Slices on the far-left column.' },
     { h: 'Strategy', m: 'Use this information, as well as the data the Scout has revealed, to plot out your infiltration.' },
-    { h: 'Strategy', m: 'Finish this level to hack the grid, revealing a new Slice type for you to recover and use.' }
+    { h: 'Strategy', m: 'Finish this level to hack the grid, revealing new Slices for you to purchase and use...' }
 
 ]
