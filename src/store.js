@@ -186,12 +186,13 @@ export default new Vuex.Store({
       state.turn++
     },
     'Finish Level' (state, payload) {
-      state.currentLevel++
+      state.currentLevel += payload && payload.hasOwnProperty('delta') ? payload.delta : 1
       state.level = _.cloneDeep(state.levels[state.currentLevel])
       state.score = 0
       state.turn = 1
       state.player.money = 500
       state.tutorial = state.level.tutorial
+      state.placedSlices = {}
       if (state.tutorial === false) {
         // Remove hidden items if there's no tutorial
         document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'))

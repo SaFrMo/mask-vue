@@ -18,7 +18,7 @@
         <h3 class="score">score: {{ $store.state.score }} / {{ $store.state.level.goal }}</h3>
       </div>
 
-      <button class="finish-turn" @click="$store.commit('Finish Turn')">
+      <button v-if="!gameOver" class="finish-turn" @click="finishTurnClicked">
         {{ queueExists ? 'Purchase Queue & ' : '' }}
         Finish Turn
       </button>
@@ -27,6 +27,11 @@
     <message-modal/>
 
     <dev-mode/>
+
+    <div v-if="gameOver" class="game-over">
+      Game over!<br/>
+      <button @click="$store.commit('Finish Level', { delta: 0 }); gameOver = false">Restart Level</button>
+    </div>
 
   </div>
 
@@ -44,6 +49,11 @@ import MessageModal from './message-modal'
 import DevMode from './dev-mode'
 
 export default {
+  data () {
+    return {
+      gameOver: false
+    }
+  },
   computed: {
     queueExists () {
       // checks if the queue has a length and if it contains any non-false values
@@ -68,6 +78,15 @@ export default {
     'player-info': PlayerInfo,
     'message-modal': MessageModal,
     'dev-mode': DevMode
+  },
+  methods: {
+    finishTurnClicked () {
+      this.$store.commit('Finish Turn')
+
+      if (this.$store.state.player.money <= 0) {
+        this.gameOver = true
+      }
+    }
   }
 }
 
@@ -78,6 +97,16 @@ export default {
     .game-board {
         display: flex;
         align-items: center;
+    }
+    .game-over {
+      z-index: 500;
+      position: fixed;
+      top: 50vh;
+      left: 50vw;
+      background-color: #c00;
+      padding: 20px;
+      border-radius: 8px;
+      transform: translate(-50%, -50%);
     }
     .meta {
       display: flex;
