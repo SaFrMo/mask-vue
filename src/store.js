@@ -82,16 +82,19 @@ export default new Vuex.Store({
       state.selectedPlacedSlice = payload.index
       state.movedThisTurn.push(payload.index)
 
+      // Finish if Slice is a medic - medics don't reveal Cell info
+      const canReveal = state.placedSlices[payload.index].name !== 'Medic'
+
       // Set cell to revealed
       const x = payload.index % state.level.map.length
       const y = Math.floor(payload.index / state.level.map.length)
-      state.level.map[y][x].revealed = true
+      state.level.map[y][x].revealed = canReveal
 
       // Reveal intermediate cells
       if (payload.intervening.length) {
         for (let index of payload.intervening) {
           const intermediate = getBoardCoordinatesFromIndex(index, state)
-          state.level.map[intermediate.y - 1][intermediate.x - 1].revealed = true
+          state.level.map[intermediate.y - 1][intermediate.x - 1].revealed = canReveal
         }
       }
     },
@@ -173,6 +176,9 @@ export default new Vuex.Store({
 
       // limit player money
       state.player.money = Math.min(state.player.money, 500)
+
+      // apply Energy penalty
+      state.player.money += state.level.energyDelta
 
       // increment turn counter
       state.turn++

@@ -8,5 +8,6 @@ export default new Game.Level(3, [
   [new Game.Cell({ health: 30 }), new Game.Cell({ health: 40 }), new Game.Cell({ health: 40 }), new Game.Cell({ health: 310 })]
 ],
   './lascaux.png',
-  Tutorial
+  Tutorial,
+  -2
 )

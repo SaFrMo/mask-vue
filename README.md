@@ -13,8 +13,18 @@
 
  (TODO: finish)
 
+### Medic
+Moves onto an occupied Cell to self-destruct and restore health to occupant
+
+
 ## Slice Ideas
-* __Medic__: Move onto an occupied Cell to self-destruct and restore health to occupant
+* __Lancer__ - High Attack. Can only move on depleted Cells.
+
+## Misc. Game Ideas
+* __Bonuses__
+  * For scoring all Goals on the same turn
+  * For beating the level below a specified turn count
+  * For revealing info for all Cells
 
 ## Build Setup
 

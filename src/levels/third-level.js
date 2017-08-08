@@ -21,5 +21,6 @@ export default new Game.Level(3, [
   [new Game.Cell(), new Game.Cell({ health: 120 }), new Game.Cell({ health: 120 }), new Game.Cell({ health: 200 }), new Game.Cell({ health: 250 }), new Game.Cell({ health: 550 })]
 ],
   './penang.png',
-  tutorial
+  tutorial,
+  -5
 )

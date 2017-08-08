@@ -69,8 +69,11 @@ export default {
       this.interveningIndices = []
       // do we have a slice selected?
       if (
+        // No slice is selected
         this.$store.state.selectedPlacedSlice === false ||
+        // Slice on this Cell is selected
         this.$store.state.selectedPlacedSlice === this.index ||
+        // Selected slice is not Medic and this Cell is occupied
         ((this.$store.getters.selectedPlacedSlice && this.$store.getters.selectedPlacedSlice.name !== 'Medic') &&
           this.$store.state.placedSlices[this.index] && this.$store.state.placedSlices[this.index] !== false)
       ) return false
@@ -168,7 +171,8 @@ export default {
     clicked () {
       // run medic healing routine
       if (this.$store.getters.selectedPlacedSlice.name === 'Medic' &&
-      this.index !== this.$store.state.selectedPlacedSlice) {
+      this.index !== this.$store.state.selectedPlacedSlice &&
+      this.$store.state.placedSlices[this.index]) {
         // remove medic and heal other cell
         this.$store.commit('Run Healing', { medicIndex: this.$store.state.selectedPlacedSlice, patientIndex: this.index })
       } else if (this.$store.state.placedSlices[this.index]) {

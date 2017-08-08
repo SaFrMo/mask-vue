@@ -64,7 +64,7 @@ const Farm = new Slice({
 const Medic = new Slice({
   name: 'Medic',
   radius: 0.2,
-  cost: 75,
+  cost: 25,
   health: 50,
   canScore: false,
   movement: new Movement({
@@ -79,9 +79,9 @@ const Medic = new Slice({
       { x: -1, y: -1, iterations: 3, options: ['jump'] }
     ],
     hostWall: 0.9,
-    description: '3 spaces any direction'
+    description: '3 spaces any direction. Can jump over and onto placed Slices.'
   }),
-  tooltip: 'Moving onto an existing Slice restores that Slice\'s health by 100 and destroys the Medic. Cannot score.'
+  tooltip: 'Moving onto an existing Slice restores that Slice\'s health by 100 and destroys the Medic. Cannot score. Does not reveal hidden Cell info.'
 })
 
 export default {

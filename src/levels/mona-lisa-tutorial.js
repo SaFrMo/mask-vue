@@ -15,7 +15,7 @@ export default [
   { h: 'Method', t: '.game-grid', m: 'This is one example of a mural, overlaid with its security grid. You\'ll be infiltrating the grid to report its weaknesses back to the artists.' },
   { h: 'Method',
     t: '.money-bar',
-    m: 'You have a limited amount of energy per infiltration. If the energy reaches 0, the security grid will find and eject you, and the game will be over.',
+    m: 'You have a limited amount of energy per infiltration, which decreases every turn. If the energy reaches 0, the security grid will find and eject you, and the game will be over.',
     callback: () => {
       document.querySelector('.player-info').classList.remove('hidden')
     } },

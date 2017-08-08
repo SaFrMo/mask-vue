@@ -1,7 +1,7 @@
 import Cell from './Cell'
 
 export default class {
-  constructor (goal, map, art, tutorial, message) {
+  constructor (goal, map, art, tutorial, energyDelta) {
     this.goal = goal || 3
     this.map = map ||
       [
@@ -11,6 +11,6 @@ export default class {
       ]
     this.art = art
     this.tutorial = tutorial
-    this.message = message || 'Score at least the goal value to infiltrate the grid...'
+    this.energyDelta = energyDelta || -5
   }
 }
