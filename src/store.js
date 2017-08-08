@@ -188,6 +188,9 @@ export default new Vuex.Store({
     },
     'Finish Level' (state, payload) {
       state.currentLevel += payload && payload.hasOwnProperty('delta') ? payload.delta : 1
+      if (state.currentLevel >= state.levels.length) {
+        state.currentLevel = 0
+      }
       state.level = _.cloneDeep(state.levels[state.currentLevel])
       state.score = 0
       state.turn = 1
