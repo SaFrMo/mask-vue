@@ -137,6 +137,7 @@ export default new Vuex.Store({
           if (occupant) {
             const cell = state.level.map[y][x]
             cell.health -= occupant.attack
+            cell.health = Math.max(0, cell.health)
 
             // Award points from dead cells
             if (cell.health <= 0 && cell.value >= 0) {
