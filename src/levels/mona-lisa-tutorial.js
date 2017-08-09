@@ -35,7 +35,7 @@ export default [
     callback: () => {
       document.querySelector('.slice-roster').classList.remove('hidden')
     } },
-  { h: 'Cells', t: '.finish-turn', m: 'Click "Finish Turn" again to see finish your turn and see the attack round in action.' },
+  { h: 'Cells', t: '.finish-turn', m: 'Click "Finish Turn" again to finish your turn and see the attack round in action.' },
   { h: 'Goal', t: '.slice.placed', m: 'Your goal is to get a target number of Slices to the far right of the board, to the space marked "Goal," before running out of Energy.' },
   { h: 'Goal',
     t: '.meta .score',
