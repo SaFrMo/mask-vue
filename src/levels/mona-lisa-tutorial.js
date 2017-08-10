@@ -35,6 +35,11 @@ export default [
     m: 'Make sure at least one Slice is queued for purchase, then click the "Finish Turn" button to finish the turn and buy those Slice(s).',
     callback: () => {
       document.querySelector('.meta').classList.remove('hidden')
+    },
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.turn > 1) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
     } },
   { h: 'Cells', t: '.cell-info', m: 'When a Slice enters or passes over a Cell, you\'ll be able to see more information about that Cell.' },
   { h: 'Cells', t: '.cell-info', m: 'Each turn that a Slice finishes in a Cell, that Slice and Cell will attack each other, reducing the other\'s HP.' },
@@ -44,7 +49,14 @@ export default [
     callback: () => {
       document.querySelector('.slice-roster').classList.remove('hidden')
     } },
-  { h: 'Cells', t: '.finish-turn', m: 'Click "Finish Turn" again to finish your turn and see the attack round in action.' },
+  { h: 'Cells',
+    t: '.finish-turn',
+    m: 'Click "Finish Turn" again to finish your turn and see the attack round in action.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.turn > 2) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
   { h: 'Goal', t: '.slice.placed', m: 'Your goal is to get a target number of Slices to the far right of the board, to the space marked "Goal," before running out of Energy.' },
   { h: 'Goal',
     t: '.meta .score',
@@ -53,10 +65,45 @@ export default [
       document.querySelector('.meta .left').classList.remove('hidden')
     } },
   { h: 'Goal', t: '.wall', m: 'You can only move a Slice when the Cell it occupies is at or below a given health level, marked by a black line on the health bar.' },
-  { h: 'Goal', t: '.slice.placed', m: 'Since this Cell\'s health is at that line, you can move this Slice. Select it and you\'ll see the Cells it\'s allowed to move to outlined in red.' },
-  { h: 'Goal', t: '.can-move', m: 'Click on the Cell to the right to move your Slice closer to the goal.' },
-  { h: 'Goal', t: '.finish-turn', m: 'Click "Finish Turn" so you can move your Slice again.' },
-  { h: 'Goal', t: '.finish-turn', m: 'Move your Slice a space closer to the goal, then click "Finish Turn" again.' },
-  { h: 'Goal', t: '.slice.placed', m: 'Move your Slice into the goal space, scoring a point and removing the Slice from the grid.' },
+  { h: 'Goal',
+    t: '.slice.placed',
+    m: 'Since this Cell\'s health is at that line, you can move this Slice. Select it and you\'ll see the Cells it\'s allowed to move to outlined in red.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 0) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Goal',
+    t: '.can-move',
+    m: 'Click on the Cell to the right to move your Slice closer to the goal.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 1) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Goal',
+    t: '.finish-turn',
+    m: 'Click "Finish Turn" so you can move your Slice again.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.turn > 3) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Goal',
+    t: '.finish-turn',
+    m: 'Move your Slice a space closer to the goal, then click "Finish Turn" again.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 2 && state.turn > 4) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Goal',
+    t: '.cell[index="7"]',
+    m: 'Move your Slice into the goal space, scoring a point and removing the Slice from the grid.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.score > 0) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
   { h: 'Goal', t: '.meta .score', m: 'Finish up the level by buying and moving Slices till you reach the target 3 points.' }
 ]

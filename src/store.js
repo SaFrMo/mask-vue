@@ -68,13 +68,16 @@ export default new Vuex.Store({
       if (state.tutorial[state.currentTutorialStep] && state.tutorial[state.currentTutorialStep].callback) {
         state.tutorial[state.currentTutorialStep].callback()
       }
-      if (state.tutorial[state.currentTutorialStep] && state.tutorial[state.currentTutorialStep].condition) {
+      if (state.tutorial[state.currentTutorialStep] && typeof state.tutorial[state.currentTutorialStep].condition === 'function') {
         state.tutorialCanAdvance = false
         state.tutorialCondition = state.tutorial[state.currentTutorialStep].condition
-        state.conditionTimer = setInterval(() => { state.tutorialCondition(state) }, 100)
+        state.conditionTimer = setInterval(() => {
+          if (typeof state.tutorialCondition === 'function') {
+            state.tutorialCondition(state)
+          }
+        }, 100)
       } else {
         state.tutorialCanAdvance = true
-        state.tutorialCondition = null
         clearInterval(state.conditionTimer)
       }
     },
