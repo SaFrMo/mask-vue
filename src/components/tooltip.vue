@@ -5,7 +5,7 @@
     <div class="headline-wrap">
       <button @click="lastStep">Back</button>
       <h3>{{ headline }}</h3>
-      <button @click="nextStep">Next</button>
+      <button :disabled="!$store.state.tutorialCanAdvance" @click="nextStep">Next</button>
     </div>
 
     <div class="message">{{ message }}</div>
@@ -84,6 +84,9 @@ export default {
     transition: left 0.4s, top 0.4s;
     border: 5px solid;
     z-index: 100;
+  }
+  button:disabled {
+    background-color: #666;
   }
   .headline-wrap {
     display: flex;

@@ -37,6 +37,9 @@ export default new Vuex.Store({
     turn: 1,
     score: 0,
     tutorial: tutorialLevel.tutorial,
+    tutorialCanAdvance: true,
+    tutorialCondition: null,
+    conditionTimer: null,
     currentTutorialStep: 0
   },
   getters: {
@@ -65,6 +68,18 @@ export default new Vuex.Store({
       if (state.tutorial[state.currentTutorialStep] && state.tutorial[state.currentTutorialStep].callback) {
         state.tutorial[state.currentTutorialStep].callback()
       }
+      if (state.tutorial[state.currentTutorialStep] && state.tutorial[state.currentTutorialStep].condition) {
+        state.tutorialCanAdvance = false
+        state.tutorialCondition = state.tutorial[state.currentTutorialStep].condition
+        state.conditionTimer = setInterval(() => { state.tutorialCondition(state) }, 100)
+      } else {
+        state.tutorialCanAdvance = true
+        state.tutorialCondition = null
+        clearInterval(state.conditionTimer)
+      }
+    },
+    'Set Tutorial Advance' (state, payload) {
+      state.tutorialCanAdvance = payload.canAdvance
     },
     'Select Slice' (state, payload) {
       state.selectedSliceIndex = payload.index
@@ -196,6 +211,7 @@ export default new Vuex.Store({
       state.turn = 1
       state.player.money = 500
       state.tutorial = state.level.tutorial
+      // state.tutorial.$store =
       state.placedSlices = {}
       if (state.tutorial === false) {
         // Remove hidden items if there's no tutorial

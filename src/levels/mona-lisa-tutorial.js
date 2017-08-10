@@ -1,3 +1,5 @@
+import store from '../store'
+
 export default [
   { h: 'Welcome!',
     m: 'Welcome to the Zinnia proof-of-concept! Press "next" to continue.',
@@ -19,7 +21,14 @@ export default [
     callback: () => {
       document.querySelector('.player-info').classList.remove('hidden')
     } },
-  { h: 'Buying Slices', t: 'circle.placer', m: 'You\'ll attempt infiltrations using "Slices." Click on the pulsing circle to queue up your first slice.' },
+  { h: 'Buying Slices',
+    t: 'circle.placer',
+    m: 'You\'ll attempt infiltrations using "Slices." Click on the pulsing circle to queue up your first slice.',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.sliceQueue[0] !== undefined && state.sliceQueue[0] !== false) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
   { h: 'Buying Slices', t: '.expenses', m: 'You can see the total cost of your queued slices here, and can click on a queued slice to remove it from the queue. You won\'t purchase the items in the queue until you finish your turn.' },
   { h: 'Turns',
     t: '.finish-turn',
