@@ -31,19 +31,66 @@ export default [
     callback: () => {
       document.querySelector('.control-zone').classList.remove('hidden')
       document.querySelector('.add-wrap > li:last-of-type').classList.add('hidden')
+    },
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedSliceIndex === 1) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
     } },
-    { h: 'Slice Variations', m: 'You\'ll see the placer change size or shape to reflect the new Slice type you\'ve selected. You\'ll also see that, for now, you can only place a Slice on the far-left column of the grid. Queue and purchase a Scout at the bottom-left Cell.', t: '.cell[index="12"]' },
-    { h: 'Slice Variations', m: 'Select the new Scout when it has been placed. You\'ll see that it can move immediately, even when a Cell is at full health, and that it can move up to three spaces in any direction.', t: '.meta' },
-    { h: 'Slice Variations', m: 'Move the Scout up to the top right space on the grid.', t: '.cell[index="3"] .cell-info' },
+  { h: 'Slice Variations',
+    m: 'You\'ll see the placer change size or shape to reflect the new Slice type you\'ve selected. You\'ll also see that, for now, you can only place a Slice on the far-left column of the grid. Queue and purchase a Scout at the bottom-left Cell.',
+    t: '.cell[index="12"]',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.placedSlices[12] !== undefined && state.placedSlices[12] !== false) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Slice Variations',
+    m: 'Select the new Scout. You\'ll see that it can move immediately, even when a Cell is at full health, and that it can move up to three spaces in any direction.',
+    t: '.meta',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 12) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Slice Variations',
+    m: 'Move the Scout up to the top right space on the grid.',
+    t: '.cell[index="3"] .cell-info',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 3) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
     { h: 'Slice Variations', m: 'You\'ll see that the Scout revealed the information on both the final Cell it landed on as well as the Cells it crossed over.', t: '.cell[index="13"] .cell-info' },
-    { h: 'Slice Variations', m: 'Finish the turn so the attack round can start.', t: '.finish-turn' },
-    { h: 'Slice Variations', m: 'The Scout has a much lower attack and less HP than a standard Slice, so you\'ll need to use it carefully. Move it to the bottom-right Cell on the grid.', t: '.cell[index="15"] .cell-info' },
+  { h: 'Slice Variations',
+    m: 'Finish the turn so the attack round can start.',
+    t: '.finish-turn',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.turn > 2) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
+  { h: 'Slice Variations',
+    m: 'The Scout has a much lower attack and less HP than a standard Slice, so you\'ll need to use it carefully. Move it to the bottom-right Cell on the grid.',
+    t: '.cell[index="15"] .cell-info',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice === 15) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
     { h: 'Slice Variations', m: 'The final column usually has the highest HP, since those Cells are the last defense against infiltration like yours.', t: '.cell[index="15"] .cell-info' },
-    { h: 'Slice Variations', m: 'Finish the turn, then move the Scout one more time however you like. Since a Scout can\'t score, it\'ll usually stay on the grid until destroyed by a Cell.', t: '.finish-turn' },
+  { h: 'Slice Variations',
+    m: 'Finish the turn, then move the Scout one more time however you like. Since a Scout can\'t score, it\'ll usually stay on the grid until destroyed by a Cell.',
+    t: '.finish-turn',
+    condition: state => {
+      if (!state.tutorialCanAdvance && state.selectedPlacedSlice !== 15 && state.turn > 3) {
+        store.commit('Set Tutorial Advance', { canAdvance: true })
+      }
+    } },
     { h: 'Cell Rewards', m: 'One final piece of information to note: reducing a Cell\'s health to 0 will do two things -' },
     { h: 'Cell Rewards', m: 'First, it will give you that Cell\'s value in Energy...' },
     { h: 'Cell Rewards', m: '...and second, it will allow you to place a new Slice directly on that Cell, instead of being constrained to only placing new Slices on the far-left column.' },
     { h: 'Strategy', m: 'Use this information, as well as the data the Scout has revealed, to plot out your infiltration.' },
-    { h: 'Strategy', m: 'Finish this level to hack the grid, revealing new Slices for you to purchase and use...' }
+    { h: 'Strategy', m: 'Finish this level to hack the grid, revealing new Slices for you to use on tougher levels!' }
 
 ]
