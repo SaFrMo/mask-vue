@@ -3,7 +3,7 @@
     <div class="player-info">
 
       <div class="money-text">
-        ${{ $store.state.player.money }}
+        ${{ $store.state.player.money }} (-${{ Math.abs($store.state.level.energyDelta) }} / turn)
         <transition name="fade">
           <span v-if="$store.getters.queuedExpenses > 0" class="expenses">( - ${{ $store.getters.queuedExpenses }})</span>
         </transition>
