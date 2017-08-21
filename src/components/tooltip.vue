@@ -1,6 +1,8 @@
 <template>
 
-  <div class="tooltip" v-if="step !== false" :style="{ left, top }">
+  <div class="tooltip" v-if="step !== false" :style="{ left, top }" :class="{ dragging }">
+
+    <div class="handle" @mousedown="startDrag($event)" @mouseup="dragging = false"></div>
 
     <div class="headline-wrap">
       <button @click="lastStep">Back</button>
@@ -21,18 +23,36 @@
 export default {
   data () {
     return {
-      left: '50vw',
-      top: '25vh'
+      baseOffset: { x: 0, y: 0 },
+      leftBase: '50vw',
+      leftDiff: 0,
+      topBase: '25vh',
+      topDiff: 0,
+      dragOrigin: { x: 0, y: 0 },
+      dragging: false
     }
+  },
+  created () {
+    window.addEventListener('mousemove', this.updateMouse)
+  },
+  destroyed () {
+    window.removeEventListener('mousemove', this.updateMouse)
   },
   methods: {
     lastStep () {
       this.$store.commit('Change Tutorial Step', { delta: -1 })
+      this.resetOffset()
       this.updatePosition()
     },
     nextStep () {
       this.$store.commit('Change Tutorial Step', { delta: 1 })
+      this.resetOffset()
       this.updatePosition()
+    },
+    resetOffset () {
+      this.baseOffset = { x: 0, y: 0 }
+      this.leftDiff = 0
+      this.topDiff = 0
     },
     updatePosition () {
       if (this.step === false) return
@@ -47,8 +67,22 @@ export default {
         top = `${rect.top + rect.height / 2}px`
       }
 
-      this.left = left
-      this.top = top
+      this.leftBase = left
+      this.topBase = top
+    },
+    startDrag (evt) {
+      this.baseOffset.x += this.leftDiff
+      this.baseOffset.y += this.topDiff
+      this.dragOrigin = { x: evt.pageX, y: evt.pageY }
+      this.leftDiff = 0
+      this.topDiff = 0
+      this.dragging = true
+    },
+    updateMouse (evt) {
+      if (!this.dragging) return
+
+      this.leftDiff = evt.pageX - this.dragOrigin.x
+      this.topDiff = evt.pageY - this.dragOrigin.y
     }
   },
   computed: {
@@ -66,6 +100,12 @@ export default {
     },
     message () {
       return this.step.m || ''
+    },
+    left () {
+      return `calc(${this.leftBase} + ${this.baseOffset.x + this.leftDiff}px)`
+    },
+    top () {
+      return `calc(${this.topBase} + ${this.baseOffset.y + this.topDiff}px)`
     }
   }
 }
@@ -82,11 +122,29 @@ export default {
     width: 300px;
     transform: translate(-50%, 25px);
     transition: left 0.4s, top 0.4s;
-    border: 5px solid;
     z-index: 100;
+  }
+  .tooltip.dragging {
+    transition: none;
+  }
+  .tooltip.dragging:hover {
+    cursor: move;
   }
   button:disabled {
     background-color: #666;
+  }
+  .handle {
+    background-color: #a77;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 8px 8px 0 0;
+    height: 22px;
+  }
+  .handle:hover {
+    background-color: #855;
+    cursor: pointer;
   }
   .headline-wrap {
     display: flex;

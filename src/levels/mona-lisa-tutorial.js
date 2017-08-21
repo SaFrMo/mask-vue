@@ -1,7 +1,7 @@
 import store from '../store'
 
 export default [
-  { h: 'Welcome!',
+  { h: 'Tutorial',
     m: 'Welcome to the Zinnia proof-of-concept! Press "next" to continue.',
     callback: () => {
       document.querySelector('.slice-roster').classList.add('hidden')
@@ -11,9 +11,9 @@ export default [
       document.querySelector('.control-zone').classList.add('hidden')
     }
   },
-  { h: 'Goal', m: 'In Zinnia, you\'re playing as a freelancer helping hack-proof "smart paint" murals.' },
-  { h: 'Goal', m: 'These works of street art are living graffiti that can interact with their surroundings...' },
-  { h: 'Goal', m: '...and their newfound popularity and ubiquity in large cities is opening up plenty of opportunities for malicious hackers.' },
+  { h: 'Tutorial', m: 'In Zinnia, you\'re playing as a freelancer helping hack-proof "smart paint" murals.' },
+  { h: 'Tutorial', m: 'These works of street art are living graffiti that can interact with their surroundings...' },
+  { h: 'Tutorial', m: '...and their newfound popularity and ubiquity in large cities is opening up plenty of opportunities for malicious hackers.' },
   { h: 'Method', t: '.game-grid', m: 'This is one example of a mural, overlaid with its security grid. You\'ll be infiltrating the grid to report its weaknesses back to the artists.' },
   { h: 'Method',
     t: '.money-bar',

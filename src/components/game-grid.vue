@@ -93,6 +93,9 @@ export default {
     .grid-wrap {
       position: relative;
     }
+    .row {
+      white-space: nowrap;
+    }
     .cell {
       width: 100px;
       height: 100px;

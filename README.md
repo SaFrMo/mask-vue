@@ -26,6 +26,10 @@ Moves onto an occupied Cell to self-destruct and restore health to occupant
   * For beating the level below a specified turn count
   * For revealing info for all Cells
 
+## Versions
+* `0.42` - Fixed a cell-wrapping bug, added draggable tutorial box, ease difficulty curve on level 3
+* `0.41` - Shopping out to playtesters.
+
 ## Build Setup
 
 ``` bash
