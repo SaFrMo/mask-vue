@@ -27,6 +27,7 @@ Moves onto an occupied Cell to self-destruct and restore health to occupant
   * For revealing info for all Cells
 
 ## Versions
+* `0.44` - Switched name to The White Mask
 * `0.43` - Removed exit button from tutorial
 * `0.42` - Fixed a cell-wrapping bug, added draggable tutorial box, ease difficulty curve on level 3
 * `0.41` - Shopping out to playtesters.
